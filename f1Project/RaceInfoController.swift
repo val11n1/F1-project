@@ -49,6 +49,14 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         return ai
     }()
     
+    let activityIndicatorOnFirstPage: UIActivityIndicatorView = {
+        
+        let ai = UIActivityIndicatorView()
+        ai.translatesAutoresizingMaskIntoConstraints = false
+        ai.color = .white
+        return ai
+    }()
+    
     let activityIndicatorForStanding: UIActivityIndicatorView = {
         
         let ai = UIActivityIndicatorView()
@@ -98,10 +106,9 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         
         queue.async {
             
-            networkingManager.shared.fetchRaceResult(round: Int(self.raceInfoModel.round)!) {[unowned self] array in
+            networkingManager.shared.fetchData(type: .RaceResultResponce, round: Int(self.raceInfoModel.round)) {[unowned self] array in
                 
-                if let racesArray = array {
-                    
+                if let racesArray = array as? [RaceResult] {
                     
                     DispatchQueue.main.sync {
                         
@@ -120,8 +127,8 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
 
                         self.navigationController?.view.isUserInteractionEnabled = true
                         self.tabBarController?.view.isUserInteractionEnabled = true
+                        activityIndicatorOnFirstPage.stopAnimating()
                     }
-                    
                     
                 }else {
                     
@@ -134,15 +141,12 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
 
                         self.navigationController?.view.isUserInteractionEnabled = true
                         self.tabBarController?.view.isUserInteractionEnabled = true
+                        activityIndicatorOnFirstPage.stopAnimating()
 
                     }
                 }
-                
-                
             }
         }
-        
-        
     }
     
     //MARK: Setup views
@@ -152,6 +156,7 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         var frame = CGRect(x: view.bounds.origin.x, y: navigationController!.navigationBar.frame.maxY + heightForSegmentImage, width: view.bounds.width, height: (view.bounds.height - navigationController!.navigationBar.frame.maxY) - navigationController!.tabBarController!.tabBar.bounds.size.height)
         
         scrollView = UIScrollView(frame: frame)
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
         scrollView.contentSize = CGSize(width: frame.size.width * 3, height: view.bounds.height - navigationController!.navigationBar.frame.maxY - navigationController!.tabBarController!.tabBar.bounds.height - heightForSegmentImage)
@@ -178,6 +183,8 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         secondPageViewSetup()
         thirdPageViewSetup()
     }
+    
+    //MARK: Third page configure
     
     private func thirdPageViewSetup() {
         
@@ -231,6 +238,8 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         ])
     }
     
+    //MARK: Second page configure
+    
     private func secondPageViewSetup() {
         
         let raceInfo = raceInfoDict[raceInfoModel.name]!
@@ -272,17 +281,7 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
                 
             }
         }
-        
         firstThreeDriversSetup()
-    }
-    
-    
-    private func labelsForPage(firstLabelText: String?, secondLabelText: String) -> [UILabel] {
-        
-        let firstLabel = UILabel(text: firstLabelText, fontSize: 18, textAlignment: .left)
-        let secondLabel = UILabel(text: secondLabelText, fontSize: 18, textAlignment: .right)
-        
-        return [firstLabel, secondLabel]
     }
     
     private func firstThreeDriversSetup() {
@@ -365,7 +364,11 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         activityIndicatorForWinners.startAnimating()
     }
     
+    //MARK: First page configure
+    
     private func firstPageViewSetup() {
+        
+        firstPageActivityIndicatorSetup()
         
         let raceImageView = UIImageView()
             
@@ -460,6 +463,20 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         
     }
     
+    private func firstPageActivityIndicatorSetup() {
+        
+        view.addSubview(activityIndicatorOnFirstPage)
+        
+        NSLayoutConstraint.activate([
+        
+            activityIndicatorOnFirstPage.bottomAnchor.constraint(equalTo: view.topAnchor, constant: navigationController!.navigationBar.frame.maxY + 20),
+            activityIndicatorOnFirstPage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorOnFirstPage.widthAnchor.constraint(equalToConstant: 50),
+            activityIndicatorOnFirstPage.heightAnchor.constraint(equalToConstant: heightForSegmentImage)
+        ])
+        activityIndicatorOnFirstPage.startAnimating()
+    }
+    
     private func setSegmentImage() {
         
        
@@ -517,6 +534,16 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    //MARK: Supporting methods
+    
+    private func labelsForPage(firstLabelText: String?, secondLabelText: String) -> [UILabel] {
+        
+        let firstLabel = UILabel(text: firstLabelText, fontSize: 18, textAlignment: .left)
+        let secondLabel = UILabel(text: secondLabelText, fontSize: 18, textAlignment: .right)
+        
+        return [firstLabel, secondLabel]
+    }
+    
     
     //MARK: Parsing date
     
@@ -538,13 +565,6 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
 
         viewForText.text = "Date: \(eventDateString), time: \(eventTimeString)"
         
-    }
-    
-    //MARK: deinit
-    
-    deinit {
-        
-        networkingManager.shared.RaceInfoTask.cancel()
     }
     
 }

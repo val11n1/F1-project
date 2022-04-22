@@ -76,8 +76,8 @@ class ScheduleTableViewController: UIViewController {
         
         queue.async {
             
-            networkingManager.shared.fetchSchedule { [unowned self] array in
-                if let fetchedArray = array {
+            networkingManager.shared.fetchData(type: .RaceScheduleResponce, round: nil) { [unowned self] array in
+                if let fetchedArray = array as? [RaceModel] {
                     
                     var pastArray = [RaceModel]()
                     var upcomingArray = [RaceModel]()
@@ -103,8 +103,11 @@ class ScheduleTableViewController: UIViewController {
                         DispatchQueue.main.async { [unowned self] in
                             countDownDescriptionForNextEvent()
                             
-                            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(countDownUpdate), userInfo: nil, repeats: true)
+                           let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(countDownUpdate), userInfo: nil, repeats: true)
+                            timer.tolerance = 0.1
+                            RunLoop.current.add(timer, forMode: .common)
 
+                            self.timer = timer
                         }
                     }
                     

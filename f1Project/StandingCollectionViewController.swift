@@ -181,17 +181,15 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
        
         let queue = DispatchQueue(label: "queueForDriversArray", qos: .utility, attributes: .concurrent)
         queue.sync {
-            networkingManager.shared.fetchCurrentDriverStanding(URLString:"http://ergast.com/api/f1/current/driverStandings.JSON") { array in
+            networkingManager.shared.fetchData(type:.DriverResponce, round: nil) { [unowned self] array in
                 
-                if array != nil {
+                if let driversArr = array as? [DriverModel] {
                     
                     self.dispatchQueue.sync {
-                        guard let driversArray = array as? [DriverModel] else { return }
-                        self.driversArray = driversArray
+                        self.driversArray = driversArr
                     }
                 }
             }
-            
         }
     }
     
@@ -199,14 +197,11 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
       
         let queue = DispatchQueue(label: "queueForDriversArray", qos: .utility, attributes: .concurrent)
         queue.async {
-            networkingManager.shared.fetchCurrentDriverStanding(URLString:"http://ergast.com/api/f1/current/constructorStandings.JSON") { array in
+            networkingManager.shared.fetchData(type:.TeamResponce, round: nil) { array in
                 
-                if array != nil {
+                if let teamsArr = array as? [TeamModel] {
                     
-                        guard let driversArray = array as? [TeamModel] else { return }
-                        self.teamsArray = driversArray
-                    
-                        
+                        self.teamsArray = teamsArr
                 }
             }
         }

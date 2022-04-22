@@ -78,9 +78,9 @@ class DriverCell: BaseCellClass {
     
     let imageCountryDictionary: [String: UIImage] = {
         
-        let dict = ["Monegasque": UIImage(named: "Monegasque")!,
+        let dict = ["Monegasque": UIImage(named: "monegasque")!,
                     "Spanish": UIImage(named: "Spanish")!,
-                    "British": UIImage(named: "British")!,
+                    "British": UIImage(named: "british")!,
                     "Danish": UIImage(named: "Danish")!,
                     "Finnish": UIImage(named: "Finnish")!,
                     "French": UIImage(named: "French")!,

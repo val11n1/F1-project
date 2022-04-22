@@ -9,7 +9,7 @@ import Foundation
 
 
 
-struct RaceModel {
+struct RaceModel: ModelProtocol {
     
     let name: String
     let round: String
@@ -91,4 +91,59 @@ struct RaceModel {
         
         return calendar.date(from: raceDateFromComponents)!.addingTimeInterval(TimeInterval(GMTSeconds))
     }
+    
+    static func createRaceModelArray(data: Data) -> [RaceModel] {
+         
+        let decoder = JSONDecoder()
+        
+        var racesArray = [RaceModel]()
+
+        do {
+            let schedule = try decoder.decode(ScheduleStruct.self, from: data)
+            let racesList = schedule.data.raceTable.races
+            
+            for race in racesList{
+                
+                let raceName = race.raceName
+                let round = race.round
+                let country = race.circuit.location.country
+                let locality = race.circuit.location.locality
+                let date = race.date
+                
+                
+                let stringIndex = race.time.index(race.time.startIndex, offsetBy: 5)
+                let raceTime = race.time[..<stringIndex]
+                
+                let fpTime = race.firstPractice.time[..<stringIndex]
+                let spTime = race.secondPractice.time[..<stringIndex]
+                let qualifyingTime = race.qualifying.time[..<stringIndex]
+                
+                let firstPractice = FirstPractice(date: race.firstPractice.date, time: String(fpTime))
+                let sp = SecondPractice(date: race.secondPractice.date, time: String(spTime))
+                let qualifying = Qualifying(date: race.qualifying.date, time: String(qualifyingTime))
+
+                var raceModel = RaceModel(name: raceName, round: round, country: country, locality: locality, date: date, time: String(raceTime), firstPractice: firstPractice, secondPractice: sp, thirdPractice: nil, qualifying:qualifying, sprint: nil)
+                
+                if let tp = race.thirdPractice {
+                    let tpTime = race.thirdPractice!.time[..<stringIndex]
+                    raceModel.thirdPractice = ThirdPractice(date: tp.date, time: String(tpTime))
+                    
+                }
+                
+                if let sprint = race.sprint {
+                    let sprintTime = race.sprint!.time[..<stringIndex]
+                    raceModel.sprint = Sprint(date: sprint.date, time: String(sprintTime))
+                }
+                
+                racesArray.append(raceModel)
+            }
+           
+            
+        } catch let err {
+            print(err)
+            
+        }
+        
+        return racesArray
+     }
 }
