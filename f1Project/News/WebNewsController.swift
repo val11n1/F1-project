@@ -63,8 +63,6 @@ class WebNewsController: UIViewController {
             gobackButton.bottomAnchor.constraint(equalTo: toolBar.bottomAnchor, constant: -3)
         ])
         
-        
-        
         webView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(webView)
@@ -76,7 +74,6 @@ class WebNewsController: UIViewController {
             webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
 
-        
     }
     
     @objc private func goBackButtonTapped() {

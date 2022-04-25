@@ -23,13 +23,19 @@
 		291CCC6B27F6566B00EBFB7D /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291CCC6A27F6566B00EBFB7D /* ScheduleTableViewController.swift */; };
 		291CCC6D27F659E500EBFB7D /* RaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291CCC6C27F659E500EBFB7D /* RaceCell.swift */; };
 		2924113D27EBDB1600800640 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924113C27EBDB1600800640 /* UIImage.swift */; };
+		292588312816A55C000D2B2E /* FirstPageViewSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588302816A55C000D2B2E /* FirstPageViewSetup.swift */; };
+		292588332816A889000D2B2E /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588322816A889000D2B2E /* UIView.swift */; };
+		292588362816ABB8000D2B2E /* DateForEventParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588352816ABB8000D2B2E /* DateForEventParser.swift */; };
+		292588382816AE83000D2B2E /* SecondPageViewSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588372816AE83000D2B2E /* SecondPageViewSetup.swift */; };
+		2925883A2816AF52000D2B2E /* RaceInfoParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588392816AF52000D2B2E /* RaceInfoParams.swift */; };
 		292AF82427F485CD000C0409 /* NewsHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292AF82327F485CD000C0409 /* NewsHeaderFooterView.swift */; };
 		292F126C27FD076300392D25 /* RaceInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F126B27FD076300392D25 /* RaceInfoCell.swift */; };
 		292F126E27FD0B5100392D25 /* RaceInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F126D27FD0B5100392D25 /* RaceInfoController.swift */; };
 		293CEB8227FA5DF900C6D9CF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CEB8127FA5DF900C6D9CF /* Label.swift */; };
 		293E1D44280DEDE700422516 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E1D43280DEDE700422516 /* Date.swift */; };
 		293F4E4C27F4C1F800AB7BE1 /* WebNewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293F4E4B27F4C1F800AB7BE1 /* WebNewsController.swift */; };
-		293F4E4E27F5153D00AB7BE1 /* HighlightsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293F4E4D27F5153D00AB7BE1 /* HighlightsController.swift */; };
+		2940162B2816DA2D008A4895 /* ThirdPageViewSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2940162A2816DA2D008A4895 /* ThirdPageViewSetup.swift */; };
+		2940162D2816E081008A4895 /* FetchNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2940162C2816E081008A4895 /* FetchNews.swift */; };
 		294373AF27FF1B4800199244 /* RaceResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294373AE27FF1B4800199244 /* RaceResultModel.swift */; };
 		294373B227FF3BA400199244 /* RaceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294373B127FF3BA400199244 /* RaceResult.swift */; };
 		296B686E27ECE92F0044EB4A /* TeamsPositionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B686D27ECE92F0044EB4A /* TeamsPositionModel.swift */; };
@@ -60,13 +66,19 @@
 		291CCC6A27F6566B00EBFB7D /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		291CCC6C27F659E500EBFB7D /* RaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceCell.swift; sourceTree = "<group>"; };
 		2924113C27EBDB1600800640 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		292588302816A55C000D2B2E /* FirstPageViewSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewSetup.swift; sourceTree = "<group>"; };
+		292588322816A889000D2B2E /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		292588352816ABB8000D2B2E /* DateForEventParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateForEventParser.swift; sourceTree = "<group>"; };
+		292588372816AE83000D2B2E /* SecondPageViewSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPageViewSetup.swift; sourceTree = "<group>"; };
+		292588392816AF52000D2B2E /* RaceInfoParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoParams.swift; sourceTree = "<group>"; };
 		292AF82327F485CD000C0409 /* NewsHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderFooterView.swift; sourceTree = "<group>"; };
 		292F126B27FD076300392D25 /* RaceInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoCell.swift; sourceTree = "<group>"; };
 		292F126D27FD0B5100392D25 /* RaceInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoController.swift; sourceTree = "<group>"; };
 		293CEB8127FA5DF900C6D9CF /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		293E1D43280DEDE700422516 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		293F4E4B27F4C1F800AB7BE1 /* WebNewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebNewsController.swift; sourceTree = "<group>"; };
-		293F4E4D27F5153D00AB7BE1 /* HighlightsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightsController.swift; sourceTree = "<group>"; };
+		2940162A2816DA2D008A4895 /* ThirdPageViewSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPageViewSetup.swift; sourceTree = "<group>"; };
+		2940162C2816E081008A4895 /* FetchNews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNews.swift; sourceTree = "<group>"; };
 		294373AE27FF1B4800199244 /* RaceResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultModel.swift; sourceTree = "<group>"; };
 		294373B127FF3BA400199244 /* RaceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResult.swift; sourceTree = "<group>"; };
 		296B686D27ECE92F0044EB4A /* TeamsPositionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsPositionModel.swift; sourceTree = "<group>"; };
@@ -126,12 +138,9 @@
 				2919EA5827EA1075009B607A /* AppDelegate.swift */,
 				2919EA7527EA67BC009B607A /* networkingManager.swift */,
 				2919EA5A27EA1075009B607A /* SceneDelegate.swift */,
-				2919EA5C27EA1075009B607A /* StandingCollectionViewController.swift */,
-				29A17DA527F2842500BF5AA5 /* NewsTableViewController.swift */,
-				293F4E4B27F4C1F800AB7BE1 /* WebNewsController.swift */,
-				293F4E4D27F5153D00AB7BE1 /* HighlightsController.swift */,
-				291CCC6A27F6566B00EBFB7D /* ScheduleTableViewController.swift */,
-				292F126D27FD0B5100392D25 /* RaceInfoController.swift */,
+				2925882B2816A36D000D2B2E /* Standing */,
+				2925882C2816A380000D2B2E /* News */,
+				2925882D2816A38E000D2B2E /* ScheduleResults */,
 				294373B027FF3B6900199244 /* DataModels */,
 				2919EA7227EA446A009B607A /* RequestModels */,
 				2919EA7B27EA7C6F009B607A /* Cells */,
@@ -174,8 +183,49 @@
 				291365CF27F0AF76003CA1CB /* StackView.swift */,
 				293CEB8127FA5DF900C6D9CF /* Label.swift */,
 				293E1D43280DEDE700422516 /* Date.swift */,
+				292588322816A889000D2B2E /* UIView.swift */,
 			);
 			path = Extentions;
+			sourceTree = "<group>";
+		};
+		2925882B2816A36D000D2B2E /* Standing */ = {
+			isa = PBXGroup;
+			children = (
+				2919EA5C27EA1075009B607A /* StandingCollectionViewController.swift */,
+			);
+			path = Standing;
+			sourceTree = "<group>";
+		};
+		2925882C2816A380000D2B2E /* News */ = {
+			isa = PBXGroup;
+			children = (
+				29A17DA527F2842500BF5AA5 /* NewsTableViewController.swift */,
+				293F4E4B27F4C1F800AB7BE1 /* WebNewsController.swift */,
+				2940162C2816E081008A4895 /* FetchNews.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		2925882D2816A38E000D2B2E /* ScheduleResults */ = {
+			isa = PBXGroup;
+			children = (
+				291CCC6A27F6566B00EBFB7D /* ScheduleTableViewController.swift */,
+				292F126D27FD0B5100392D25 /* RaceInfoController.swift */,
+				292588342816AB3F000D2B2E /* PageViewSetup */,
+			);
+			path = ScheduleResults;
+			sourceTree = "<group>";
+		};
+		292588342816AB3F000D2B2E /* PageViewSetup */ = {
+			isa = PBXGroup;
+			children = (
+				292588302816A55C000D2B2E /* FirstPageViewSetup.swift */,
+				292588372816AE83000D2B2E /* SecondPageViewSetup.swift */,
+				2940162A2816DA2D008A4895 /* ThirdPageViewSetup.swift */,
+				292588392816AF52000D2B2E /* RaceInfoParams.swift */,
+				292588352816ABB8000D2B2E /* DateForEventParser.swift */,
+			);
+			path = PageViewSetup;
 			sourceTree = "<group>";
 		};
 		294373B027FF3B6900199244 /* DataModels */ = {
@@ -317,28 +367,34 @@
 				2919EA7427EA448D009B607A /* DriversPositionModel.swift in Sources */,
 				299DAB2E27EB9123004EB590 /* F1TabBarController.swift in Sources */,
 				296B686E27ECE92F0044EB4A /* TeamsPositionModel.swift in Sources */,
-				293F4E4E27F5153D00AB7BE1 /* HighlightsController.swift in Sources */,
 				298A818E27F3BDA20061A3F8 /* NewsCell.swift in Sources */,
+				292588362816ABB8000D2B2E /* DateForEventParser.swift in Sources */,
 				294373AF27FF1B4800199244 /* RaceResultModel.swift in Sources */,
 				292AF82427F485CD000C0409 /* NewsHeaderFooterView.swift in Sources */,
 				2919EA7627EA67BC009B607A /* networkingManager.swift in Sources */,
+				292588312816A55C000D2B2E /* FirstPageViewSetup.swift in Sources */,
 				2919EA5D27EA1075009B607A /* StandingCollectionViewController.swift in Sources */,
 				2919EA7827EA6D3E009B607A /* DriverModel.swift in Sources */,
+				2940162B2816DA2D008A4895 /* ThirdPageViewSetup.swift in Sources */,
 				29A17DA627F2842500BF5AA5 /* NewsTableViewController.swift in Sources */,
 				291C13182811E75B009047B1 /* ModelProtocol.swift in Sources */,
 				293F4E4C27F4C1F800AB7BE1 /* WebNewsController.swift in Sources */,
 				292F126C27FD076300392D25 /* RaceInfoCell.swift in Sources */,
+				292588332816A889000D2B2E /* UIView.swift in Sources */,
 				291CCC6D27F659E500EBFB7D /* RaceCell.swift in Sources */,
 				2924113D27EBDB1600800640 /* UIImage.swift in Sources */,
 				293CEB8227FA5DF900C6D9CF /* Label.swift in Sources */,
 				294373B227FF3BA400199244 /* RaceResult.swift in Sources */,
 				296B687227ED0B1C0044EB4A /* TeamCell.swift in Sources */,
+				2925883A2816AF52000D2B2E /* RaceInfoParams.swift in Sources */,
+				292588382816AE83000D2B2E /* SecondPageViewSetup.swift in Sources */,
 				291365D027F0AF76003CA1CB /* StackView.swift in Sources */,
 				296B687027ED059A0044EB4A /* TeamModel.swift in Sources */,
 				2919EA5927EA1075009B607A /* AppDelegate.swift in Sources */,
 				293E1D44280DEDE700422516 /* Date.swift in Sources */,
 				291CCC6727F5DF2C00EBFB7D /* RaceScheduleModel.swift in Sources */,
 				291CCC6B27F6566B00EBFB7D /* ScheduleTableViewController.swift in Sources */,
+				2940162D2816E081008A4895 /* FetchNews.swift in Sources */,
 				291CCC6927F653FB00EBFB7D /* RaceModel.swift in Sources */,
 				2919EA5B27EA1075009B607A /* SceneDelegate.swift in Sources */,
 			);

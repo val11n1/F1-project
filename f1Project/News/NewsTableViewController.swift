@@ -30,12 +30,21 @@ class NewsTableViewController: UITableViewController {
         activityIndicator.startAnimating()
         tableView.separatorStyle = .none
         navigationItem.title = "News"
+        fetchNews()
+        
+        tableView.register(NewsCell.self, forCellReuseIdentifier: newsCellId)
+        tableView.register(BaseHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: newsHeaderFooterId)
+    }
+    
+    //MARK: Fetch news
+    
+    private func fetchNews()  {
         
         let queue = DispatchQueue(label: "NewsQueue", qos: .utility, attributes: .concurrent)
         
         queue.async { [unowned self] in
             
-            let tupleArray = fetchNews()
+            let tupleArray = FetchNews.fetchNews()
             
             if let pinnedArray = tupleArray.0, let newNewsArray = tupleArray.1 {
             
@@ -48,13 +57,39 @@ class NewsTableViewController: UITableViewController {
             }
             }else {
                 
-                
             }
         }
         
-        tableView.register(NewsCell.self, forCellReuseIdentifier: newsCellId)
-        tableView.register(BaseHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: newsHeaderFooterId)
+        
     }
+    
+    //MARK: WebViewController setup
+    
+    private func createWebNewsController(link: String) {
+        
+        let webController = WebNewsController()
+
+        webController.urlString = link
+        navigationController?.present(webController, animated: true)
+    }
+    
+    //MARK: SetupViews
+    
+    private func setupView() {
+        
+        self.view.addSubview(activityIndicator)
+        NSLayoutConstraint.activate([
+        
+            activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -25),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 50),
+        ])
+    }
+    
+}
+
+extension NewsTableViewController {
     
     //MARK: UITableViewDelegate, UITableViewDataSource
     
@@ -124,81 +159,4 @@ class NewsTableViewController: UITableViewController {
             print(err.localizedDescription)
         }
     }
-    
-    
-    //MARK: Fetch news
-    
-    private func fetchNews() -> ([Element]?, [Element]?) {
-        
-        var pinnedNewsArr = [Element]()
-        var newsArr = [Element]()
-        let urlString = "https://www.f1news.ru"
-        var firstSevenNews = 0
-        guard let url = URL(string: urlString) else { return (pinnedNewsArr, newsArr) }
-
-        do {
-            
-            if let myHtmlString = try? String(contentsOf: url, encoding: .utf8) {
-            do {
-
-                let doc = try! SwiftSoup.parse(myHtmlString)
-                let linkes: Elements = try! doc.select("a")
-                
-                
-                for el in linkes {
-                    
-                    let text = try el.text()
-                    
-                        if text.count >= 19 {
-                            
-                            if firstSevenNews < 7 {
-                                pinnedNewsArr.append(el)
-                                firstSevenNews += 1
-                            }else {
-                                
-                                newsArr.append(el)
-                                
-                            }
-                        }
-                }
-            }
-
-            }else {
-                
-                return (nil, nil)
-            }
-            
-            
-        }catch let err {
-
-            print(err.localizedDescription)
-        }
-        
-        return (pinnedNewsArr, newsArr)
-    }
-    
-    //MARK: WebViewController setup
-    
-    private func createWebNewsController(link: String) {
-        
-        let webController = WebNewsController()
-
-        webController.urlString = link
-        navigationController?.present(webController, animated: true)
-    }
-    
-    //MARK: SetupViews
-    
-    private func setupView() {
-        
-        self.view.addSubview(activityIndicator)
-        NSLayoutConstraint.activate([
-        
-            activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -25),
-            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
-            activityIndicator.heightAnchor.constraint(equalToConstant: 50),
-        ])
-    }
-    
 }
