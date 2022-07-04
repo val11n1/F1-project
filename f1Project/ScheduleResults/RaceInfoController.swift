@@ -45,7 +45,7 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
     ["Bahrain Grand Prix": (UIImage(named: "bahrain")!, 57, 5412, 308.238),
      "Saudi Arabian Grand Prix": (UIImage(named: "jeddah")!, 50, 6174, 308.450),
      "Australian Grand Prix": (UIImage(named: "australian")!, 58, 5303, 307.574),
-     "Emilia Romagna Grand Prix": (UIImage(named: "imola")!, 63, 4909, 309.049),
+     "Emilia Romagna Grand Prix": (UIImage(named: "Imola")!, 63, 4909, 309.049),
      "Miami Grand Prix": (UIImage(named: "miami")!, 57, 5410, 308.370),
      "Spanish Grand Prix": (UIImage(named: "spain")!, 66, 4655, 307.104),
      "Monaco Grand Prix": (UIImage(named: "monaco")!, 78, 3337, 260.286),
