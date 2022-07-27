@@ -13,8 +13,8 @@ class NewsTableViewController: UITableViewController {
     
     let newsCellId = "newsCellId"
     let newsHeaderFooterId = "newsHeaderFooterId"
-    var pinnedNewsArray: [Element]?
-    var newsArray: [Element]?
+    var viewModel: NewsViewModelProtocol?
+    
     let activityIndicator: UIActivityIndicatorView = {
         
         let indicator = UIActivityIndicatorView()
@@ -30,48 +30,17 @@ class NewsTableViewController: UITableViewController {
         activityIndicator.startAnimating()
         tableView.separatorStyle = .none
         navigationItem.title = "News"
-        fetchNews()
-        
         tableView.register(NewsCell.self, forCellReuseIdentifier: newsCellId)
         tableView.register(BaseHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: newsHeaderFooterId)
-    }
-    
-    //MARK: Fetch news
-    
-    private func fetchNews()  {
         
-        let queue = DispatchQueue(label: "NewsQueue", qos: .utility, attributes: .concurrent)
-        
-        queue.async { [unowned self] in
+        NewsViewModel.createViewModel { [weak self] viewModel in
             
-            let tupleArray = FetchNews.fetchNews()
-            
-            if let pinnedArray = tupleArray.0, let newNewsArray = tupleArray.1 {
-            
-                pinnedNewsArray = pinnedArray
-                newsArray = newNewsArray
-                
-            DispatchQueue.main.sync {
-                activityIndicator.stopAnimating()
-                tableView.reloadData()
-            }
-            }else {
-                
-            }
+            self?.activityIndicator.stopAnimating()
+            self?.viewModel = viewModel
+            self?.tableView.reloadData()
         }
-        
-        
     }
     
-    //MARK: WebViewController setup
-    
-    private func createWebNewsController(link: String) {
-        
-        let webController = WebNewsController()
-
-        webController.urlString = link
-        navigationController?.present(webController, animated: true)
-    }
     
     //MARK: SetupViews
     
@@ -94,28 +63,22 @@ extension NewsTableViewController {
     //MARK: UITableViewDelegate, UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        if section == 0 {
-            return pinnedNewsArray == nil ? 0: pinnedNewsArray!.count
-        }else {
-            return newsArray == nil ? 0: 30
-        }
+        
+        return viewModel?.numberOfRowsInSection(section: section) ?? 0
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 2
+        return viewModel?.numberOfSections() ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: newsCellId) as! NewsCell
         
-        
-        let element = indexPath.section == 0 ? pinnedNewsArray![indexPath.row]: newsArray![indexPath.row]
-        
-        cell.configure(element: element)
-        
+        if let element = viewModel?.elementFrom(indexPath: indexPath) {
+            cell.configure(element: element)
+        }
         return cell
     }
     
@@ -126,37 +89,21 @@ extension NewsTableViewController {
         return view
     }
     
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return viewModel?.heightForRow() ?? 44.0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Pinned news": "News"
+        return viewModel?.titleForHeaderInSection(section: section)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.tableView.deselectRow(at: indexPath, animated: true)
         
-        let element = indexPath.section == 0 ? pinnedNewsArray![indexPath.row]: newsArray![indexPath.row]
-        
-        do {
-            var link: String = try element.attr("href")
+        if let webController = viewModel?.createWebControllerFrom(indexPath: indexPath) {
             
-            if link.hasPrefix("http") {
-                
-                let stringIndex = link.index(link.startIndex, offsetBy: 4)
-                link.insert("s", at: stringIndex)
-                createWebNewsController(link: link)
-                
-            }else {
-                
-                createWebNewsController(link: "https://www.f1news.ru" + link)
-                
-            }
-        }catch let err {
-            print(err.localizedDescription)
+            navigationController?.present(webController, animated: true)
         }
     }
 }

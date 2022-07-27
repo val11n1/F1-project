@@ -52,6 +52,7 @@ class F1TabBarController: UITabBarController {
         let newsController = NewsTableViewController(style: .plain)
         newsController.tabBarItem = UITabBarItem(title: "News", image: UIImage(named: "news")?.withRenderingMode(.alwaysOriginal), tag: 0)
         let navForNews = UINavigationController(rootViewController: newsController)
+        navForNews.navigationBar.isTranslucent = false
         //navForNews.navigationBar.standardAppearance = standartAppearence
         
         
@@ -70,8 +71,6 @@ class F1TabBarController: UITabBarController {
         tabBar.isTranslucent = false
         
     }
-    
-    
 }
 
 //MARK: UITabBarDelegate
@@ -89,7 +88,7 @@ extension F1TabBarController {
                 
                 let vc = nav.visibleViewController as! StandingCollectionViewController
                 
-                if vc.driversArray != nil && vc.teamsArray != nil {
+                if vc.viewModel != nil {
                     
                     vc.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
                 }
@@ -98,7 +97,7 @@ extension F1TabBarController {
                 
                 let vc = nav.visibleViewController as! NewsTableViewController
                 
-                if vc.newsArray != nil && vc.pinnedNewsArray != nil {
+                if vc.viewModel != nil {
                     
                     vc.tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
                 }

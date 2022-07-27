@@ -12,7 +12,7 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
     var reloadItemIndexPath: IndexPath?
     let cellDriverId = "cellDriverId"
     let cellTeamId = "cellTeamId"
-    private var arrayForModel: [Any]?
+    var viewModel: StandingViewModelProtocol?
     
     let activityIndicator: UIActivityIndicatorView = {
         
@@ -23,28 +23,6 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
         
         return activityIndicator
     }()
-    
-    let dispatchQueue = DispatchQueue(label: "queueForFetchStandingsData")
-    
-    var driversArray: [DriverModel]? {
-        
-        didSet {
-            arrayForModel = driversArray
-            fetchTeamsArray()
-        }
-    }
-    
-    var teamsArray: [TeamModel]? {
-        
-        didSet {
-
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.segmentControl.isHidden = false
-                self.collectionView.reloadData()
-            }
-        }
-    }
     
     let segmentControl: UISegmentedControl = {
         
@@ -64,11 +42,8 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
             UIDevice.current.setValue(value, forKey: "orientation")
         }
         
-        
         setupView()
         activityIndicator.startAnimating()
-        fetchDriversArray()
-        //fetchTeamsArray()
         collectionView.register(DriverCell.self, forCellWithReuseIdentifier: cellDriverId)
         collectionView.register(TeamCell.self, forCellWithReuseIdentifier: cellTeamId)
         
@@ -78,17 +53,22 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
         self.navigationItem.titleView?.frame.size = CGSize(width: self.view.frame.width, height: self.navigationItem.titleView!.frame.height)
         
         setGestures()
+        
+        StandingViewModel.createViewModel { [weak self] viewModel in
+            
+            self?.activityIndicator.stopAnimating()
+            self?.segmentControl.isHidden = false
+            self?.viewModel = viewModel
+            self?.collectionView.reloadData()
+        }
+
     }
     
 
-    //MARK: UIScrollViewDelegate, UIScrollViewDataSource
+    //MARK: UICollectionViewDelegate, UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        switch arrayForModel != nil {
-        case true: return arrayForModel!.count
-        default: return 0
-        }
+        return viewModel?.numberOfItem(selectedSegmentIndex: segmentControl.selectedSegmentIndex) ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -97,7 +77,7 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
             
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellDriverId, for: indexPath) as! DriverCell
             
-            if let driver = arrayForModel?[indexPath.item] as? DriverModel {
+            if let driver = viewModel?.returnModelFrom(selectedSegmentIndex: segmentControl.selectedSegmentIndex, itemIndex: indexPath.item) as? DriverModel {
                 cell.configure(driverModel: driver)
             }
             return cell
@@ -106,17 +86,18 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
             
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellTeamId, for: indexPath) as! TeamCell
             
-            if let team = arrayForModel?[indexPath.item] as? TeamModel {
+            if let team = viewModel?.returnModelFrom(selectedSegmentIndex: segmentControl.selectedSegmentIndex, itemIndex: indexPath.item) as? TeamModel {
                 cell.configure(teamModel: team)
-                cell.carImageConstraint.constant = indexPath == reloadItemIndexPath ? 150: 0
-                collectionView.layoutIfNeeded()
-                cell.showCarImageView.image = UIImage(named: "down")
                 
                     if indexPath == reloadItemIndexPath  {
                     
                         cell.showCarImageView.image = UIImage(named: "up")!
-                        
+                        cell.carImageConstraint.constant = 150
+                    }else {
+                        cell.showCarImageView.image = UIImage(named: "down")
+                        cell.carImageConstraint.constant = 0
                     }
+                collectionView.layoutIfNeeded()
             }
             return cell
         }
@@ -124,7 +105,7 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        switch arrayForModel != nil {
+        switch viewModel != nil {
         case true:
             
             if segmentControl.selectedSegmentIndex == 0 {
@@ -170,42 +151,11 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) {
                 collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
             }
-            
         }
-        
     }
 
-    //MARK: Fetch data
+ 
     
-    fileprivate func fetchDriversArray() {
-       
-        let queue = DispatchQueue(label: "queueForDriversArray", qos: .utility, attributes: .concurrent)
-        queue.sync {
-            networkingManager.shared.fetchData(type:.DriverResponce, round: nil) { [unowned self] array in
-                
-                if let driversArr = array as? [DriverModel] {
-                    
-                    self.dispatchQueue.sync {
-                        self.driversArray = driversArr
-                    }
-                }
-            }
-        }
-    }
-    
-    fileprivate func fetchTeamsArray() {
-      
-        let queue = DispatchQueue(label: "queueForDriversArray", qos: .utility, attributes: .concurrent)
-        queue.async {
-            networkingManager.shared.fetchData(type:.TeamResponce, round: nil) { array in
-                
-                if let teamsArr = array as? [TeamModel] {
-                    
-                        self.teamsArray = teamsArr
-                }
-            }
-        }
-    }
     
     //MARK: Setup view
     
@@ -231,14 +181,13 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
     
     @objc private func segmentAction(sender: UISegmentedControl) {
         
-        if sender.selectedSegmentIndex == 0 && driversArray != nil {
+        if sender.selectedSegmentIndex == 0  {
             
-            arrayForModel = driversArray
+            
             collectionView.reloadData()
             collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-        }else if sender.selectedSegmentIndex == 1 && teamsArray != nil {
+        }else if sender.selectedSegmentIndex == 1  {
             
-            arrayForModel = teamsArray
             collectionView.reloadData()
             collectionView.scrollToItem(at: IndexPath(item: reloadItemIndexPath == nil ? 0: reloadItemIndexPath!.item, section: 0), at: .centeredVertically, animated: false)
 
@@ -261,17 +210,22 @@ class StandingCollectionViewController: UICollectionViewController, UICollection
     @objc private func swipeStanding(sender: UISwipeGestureRecognizer) {
         
         collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-
+        
         switch sender.direction {
             
         case .right:
+            
+            if segmentControl.selectedSegmentIndex != 0 {
             segmentControl.selectedSegmentIndex = 0
-            arrayForModel = driversArray
             collectionView.reloadData()
+            }
+            
         case .left:
+            
+            if segmentControl.selectedSegmentIndex != 1 {
             segmentControl.selectedSegmentIndex = 1
-            arrayForModel = teamsArray
             collectionView.reloadData()
+            }
         default: break
         }
         
