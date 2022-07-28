@@ -49,8 +49,12 @@
 		3940312F2891537E003DEB56 /* StandingViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3940312E2891537E003DEB56 /* StandingViewModelProtocol.swift */; };
 		39403132289173E6003DEB56 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39403131289173E6003DEB56 /* NewsViewModel.swift */; };
 		3940313428917542003DEB56 /* NewsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3940313328917542003DEB56 /* NewsViewModelProtocol.swift */; };
+		395EDA5E2892A5CD001FD12C /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395EDA5D2892A5CD001FD12C /* ScheduleView.swift */; };
+		395EDA602892A5DF001FD12C /* ScheduleViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395EDA5F2892A5DF001FD12C /* ScheduleViewProtocol.swift */; };
 		39627EF328902E7800688BF4 /* f1ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39627EF228902E7800688BF4 /* f1ProjectTests.swift */; };
 		39627EFC28902F9800688BF4 /* SceneDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39627EFB28902F9800688BF4 /* SceneDelegateTests.swift */; };
+		398000062891E1BD0039E0C0 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398000052891E1BD0039E0C0 /* ScheduleViewModel.swift */; };
+		398000082891E2290039E0C0 /* ScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398000072891E2290039E0C0 /* ScheduleViewModelProtocol.swift */; };
 		5AE9985A653CD9B16A5E7895 /* Pods_f1Project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3E6C8FC6602B39AD984D5B6 /* Pods_f1Project.framework */; };
 /* End PBXBuildFile section */
 
@@ -109,9 +113,13 @@
 		3940312E2891537E003DEB56 /* StandingViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingViewModelProtocol.swift; sourceTree = "<group>"; };
 		39403131289173E6003DEB56 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		3940313328917542003DEB56 /* NewsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModelProtocol.swift; sourceTree = "<group>"; };
+		395EDA5D2892A5CD001FD12C /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		395EDA5F2892A5DF001FD12C /* ScheduleViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewProtocol.swift; sourceTree = "<group>"; };
 		39627EF028902E7800688BF4 /* f1ProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = f1ProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39627EF228902E7800688BF4 /* f1ProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = f1ProjectTests.swift; sourceTree = "<group>"; };
 		39627EFB28902F9800688BF4 /* SceneDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegateTests.swift; sourceTree = "<group>"; };
+		398000052891E1BD0039E0C0 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		398000072891E2290039E0C0 /* ScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
 		B3E6C8FC6602B39AD984D5B6 /* Pods_f1Project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_f1Project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D689FB34A896F5EF9B2E59 /* Pods-f1Project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-f1Project.debug.xcconfig"; path = "Target Support Files/Pods-f1Project/Pods-f1Project.debug.xcconfig"; sourceTree = "<group>"; };
 		FE8B63D3803EDF80399731DE /* Pods-f1Project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-f1Project.release.xcconfig"; path = "Target Support Files/Pods-f1Project/Pods-f1Project.release.xcconfig"; sourceTree = "<group>"; };
@@ -247,6 +255,9 @@
 			isa = PBXGroup;
 			children = (
 				291CCC6A27F6566B00EBFB7D /* ScheduleTableViewController.swift */,
+				398000052891E1BD0039E0C0 /* ScheduleViewModel.swift */,
+				395EDA5D2892A5CD001FD12C /* ScheduleView.swift */,
+				395EDA612892A5E8001FD12C /* Protocols */,
 				3940312B28914F51003DEB56 /* RaceInfo */,
 				292588342816AB3F000D2B2E /* PageViewSetup */,
 			);
@@ -307,6 +318,15 @@
 				293F4E4B27F4C1F800AB7BE1 /* WebNewsController.swift */,
 			);
 			path = WebNews;
+			sourceTree = "<group>";
+		};
+		395EDA612892A5E8001FD12C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				398000072891E2290039E0C0 /* ScheduleViewModelProtocol.swift */,
+				395EDA5F2892A5DF001FD12C /* ScheduleViewProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		39627EF128902E7800688BF4 /* f1ProjectTests */ = {
@@ -485,7 +505,9 @@
 				2919EA7427EA448D009B607A /* DriversPositionModel.swift in Sources */,
 				299DAB2E27EB9123004EB590 /* F1TabBarController.swift in Sources */,
 				296B686E27ECE92F0044EB4A /* TeamsPositionModel.swift in Sources */,
+				398000082891E2290039E0C0 /* ScheduleViewModelProtocol.swift in Sources */,
 				298A818E27F3BDA20061A3F8 /* NewsCell.swift in Sources */,
+				395EDA5E2892A5CD001FD12C /* ScheduleView.swift in Sources */,
 				292588362816ABB8000D2B2E /* DateForEventParser.swift in Sources */,
 				294373AF27FF1B4800199244 /* RaceResultModel.swift in Sources */,
 				292AF82427F485CD000C0409 /* NewsHeaderFooterView.swift in Sources */,
@@ -505,6 +527,7 @@
 				293CEB8227FA5DF900C6D9CF /* Label.swift in Sources */,
 				3940313428917542003DEB56 /* NewsViewModelProtocol.swift in Sources */,
 				294373B227FF3BA400199244 /* RaceResult.swift in Sources */,
+				395EDA602892A5DF001FD12C /* ScheduleViewProtocol.swift in Sources */,
 				296B687227ED0B1C0044EB4A /* TeamCell.swift in Sources */,
 				2925883A2816AF52000D2B2E /* RaceInfoParams.swift in Sources */,
 				292588382816AE83000D2B2E /* SecondPageViewSetup.swift in Sources */,
@@ -517,6 +540,7 @@
 				291CCC6B27F6566B00EBFB7D /* ScheduleTableViewController.swift in Sources */,
 				291CCC6927F653FB00EBFB7D /* RaceModel.swift in Sources */,
 				3940312D28914F7F003DEB56 /* StandingViewModel.swift in Sources */,
+				398000062891E1BD0039E0C0 /* ScheduleViewModel.swift in Sources */,
 				2919EA5B27EA1075009B607A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

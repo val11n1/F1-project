@@ -23,14 +23,23 @@ class NewsViewModel: NewsViewModelProtocol {
         
     }
     
-    static func createViewModel(completion: (NewsViewModelProtocol) -> ()) {
+    static func createViewModel(completion: @escaping (NewsViewModelProtocol) -> ()) {
         
-        if let resultArray = networkingManager.shared.fetchNews() {
+        DispatchQueue.global(qos: .userInitiated).async {
             
-            let viewModel = NewsViewModel(array: resultArray)
-            completion(viewModel)
-        }else {
-            completion(NewsViewModel())
+            if let resultArray = networkingManager.shared.fetchNews() {
+                
+                let viewModel = NewsViewModel(array: resultArray)
+                
+                DispatchQueue.main.async {
+                    completion(viewModel)
+                }
+            }else {
+                
+                DispatchQueue.main.async {
+                    completion(NewsViewModel())
+                }
+            }
         }
     }
     

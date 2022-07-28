@@ -70,7 +70,7 @@ struct RaceModel: ModelProtocol {
         return dateFromRaceModel(date: date, time: time)
     }
     
-    func dateFromRaceModel(date: String, time: String) -> Date {
+    private func dateFromRaceModel(date: String, time: String) -> Date {
         
         let GMTSeconds = TimeInterval(TimeZone.current.secondsFromGMT())
         
@@ -143,7 +143,56 @@ struct RaceModel: ModelProtocol {
             print(err)
             
         }
-        
         return racesArray
      }
+    
+    func nextUpcomingEvent() -> RaceModel.RaceEvent {
+        
+        let dateNow = Date().returnCurrentDate()
+        
+        var event: RaceModel.RaceEvent!
+        
+        if self.thirdPractice != nil {
+        
+        switch true {
+        case _ where self.dateFromEvent(event: .firstPractice) > dateNow:
+            event = .firstPractice
+        case _ where self.dateFromEvent(event: .secondPractice) > dateNow:
+            event = .secondPractice
+        case _ where self.dateFromEvent(event: .thirdPracticeOrSprint) > dateNow:
+            event = .thirdPracticeOrSprint
+        case _ where self.dateFromEvent(event: .qualifying) > dateNow:
+            event = .qualifying
+        case _ where self.dateFromEvent(event: .race) > dateNow:
+            event = .race
+        default: break
+        }
+
+    }else {
+        
+        switch true {
+        case _ where self.dateFromEvent(event: .firstPractice) > dateNow:
+            event = .firstPractice
+        case _ where self.dateFromEvent(event: .qualifying) > dateNow:
+            event = .qualifying
+        case _ where self.dateFromEvent(event: .secondPractice) > dateNow:
+            event = .secondPractice
+        case _ where self.dateFromEvent(event: .thirdPracticeOrSprint) > dateNow:
+            event = .thirdPracticeOrSprint
+        case _ where self.dateFromEvent(event: .race) > dateNow:
+            event = .race
+        default: break
+        }
+    }
+        return event
+    }
+}
+
+
+extension RaceModel: Equatable {
+    
+    static func == (lhs: RaceModel, rhs: RaceModel) -> Bool {
+        
+        return lhs.name == rhs.name && lhs.round == rhs.round
+    }
 }

@@ -17,7 +17,7 @@ extension UILabel {
         self.textAlignment = textAlignment
         let descriptor = UIFontDescriptor().withSymbolicTraits(.traitBold)
         font = UIFont(descriptor: descriptor!, size: fontSize)
-        
+        self.translatesAutoresizingMaskIntoConstraints = false
         if let text = text {
             self.text = text
         }

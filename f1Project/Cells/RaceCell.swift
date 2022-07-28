@@ -58,53 +58,25 @@ class RaceCell: BaseTableViewCell {
         
     }
     
-    func configure(raceModel: RaceModel, isCurrentRace:inout Bool) -> Bool {
+    func configure(raceModel: RaceModel, raceType: TypeOfRace) {
         
         self.accessoryType = .disclosureIndicator
         nameLabel.text = raceModel.name
         nameLabel.textAlignment = .left
         
         dateForDateLabel(raceModel: raceModel)
-        let image = imageForRacewith(model: raceModel, iScurrentRace: &isCurrentRace)
         
-        completionImageView.image = image
-        
-        if image == UIImage(named: "next")! {
-            
-            return true
-        }else {
-            
-            return false
+        switch raceType {
+        case .nextRace:
+            completionImageView.image = UIImage(named: "next")
+        case .upcomingRace:
+            completionImageView.image = UIImage(named: "soon")
+        case .pastRace:
+            completionImageView.image = UIImage(named: "done")
         }
     }
     
-    private func imageForRacewith(model: RaceModel, iScurrentRace: inout Bool) -> UIImage {
-        
-        var image = UIImage()
-        
-        let date = model.raceDateWithOffset()
-        
-        let currentDate = Date().returnCurrentDate()
-        
-        if date > currentDate {
-            
-            if iScurrentRace == false {
-                
-                iScurrentRace = true
-                image = UIImage(named: "next")!
-                
-            }else {
-                
-                image = UIImage(named: "soon")!
-            }
-        }else {
-            
-            image = UIImage(named: "done")!
-        }
-        
-        return image
-    }
-    
+
     private func dateForDateLabel(raceModel: RaceModel) {
         
         let dateFormatter = DateFormatter()

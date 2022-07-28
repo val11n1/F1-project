@@ -68,7 +68,7 @@ class F1TabBarController: UITabBarController {
         sa.backgroundColor = .black
 
         tabBar.standardAppearance = sa
-        tabBar.isTranslucent = false
+        tabBar.barStyle = UIBarStyle.black
         
     }
 }
@@ -106,9 +106,9 @@ extension F1TabBarController {
                 
                 let vc = nav.visibleViewController as! ScheduleTableViewController
                 
-                if vc.upcomingRaceArray != nil && vc.pastRacesArray != nil {
+                if vc.viewModel != nil {
                     
-                    vc.tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+                    vc.scheduleView.tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
                 }
 
 
