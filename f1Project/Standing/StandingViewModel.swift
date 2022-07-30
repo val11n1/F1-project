@@ -5,13 +5,14 @@
 //  Created by Valeriy Trusov on 27.07.2022.
 //
 
-import Foundation
+import UIKit
 
 
 class StandingViewModel: StandingViewModelProtocol {
     
     private var driversArray = [ModelProtocol]()
     private var teamsArray = [ModelProtocol]()
+    var chosenCellIndexPath: IndexPath?
     
     private init(driversArray: [ModelProtocol], teamsArray: [ModelProtocol]) {
         self.driversArray = driversArray
@@ -84,6 +85,41 @@ class StandingViewModel: StandingViewModelProtocol {
         case 1: return teamsArray[itemIndex]
         default: return nil
         }
+    }
+    
+    func sizeForItemAt(indexPath: IndexPath, selectedSegmentIndex: Int) -> CGSize {
+        
+        let screenWidth = UIScreen.main.bounds.width
+        if selectedSegmentIndex == 0 {
+            return CGSize(width: screenWidth, height: 130)
+        }else {
+            if chosenCellIndexPath == indexPath  {
+                return CGSize(width: screenWidth, height: 300)
+            }
+            return CGSize(width: screenWidth, height: 100)
+        }
+    }
+    
+    func choseCellAt(indexPath: IndexPath) {
+        
+        if chosenCellIndexPath == nil || chosenCellIndexPath != indexPath {
+        chosenCellIndexPath = indexPath
+        }else {
+            chosenCellIndexPath = nil
+        }
+    }
+    
+    func minimumLineSpacingForSectionAt(selectedSegmentIndex: Int) -> CGFloat {
+        
+        return selectedSegmentIndex == 0 ? 0: 5
+    }
+    
+    func isCellChosen(indexPath: IndexPath) -> Bool {
+        
+        if let chosenCellIndexPath = chosenCellIndexPath {
+            return chosenCellIndexPath == indexPath
+        }
+       return false
     }
 }
 

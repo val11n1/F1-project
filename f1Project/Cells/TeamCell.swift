@@ -184,7 +184,7 @@ class TeamCell: BaseCellClass {
         ])
     }
     
-    func configure(teamModel: TeamModel) {
+    func configure(teamModel: TeamModel, isChosenTeam: Bool) {
         
         nameLabel.text = teamModel.name
         standingLabel.text = "#" + teamModel.position
@@ -199,6 +199,16 @@ class TeamCell: BaseCellClass {
         if let image = TeamLogoDictionary[teamModel.name] {
             
             teamImageView.image = image
+        }
+        
+        if isChosenTeam {
+            
+            self.showCarImageView.image = UIImage(named: "up")!
+            self.carImageConstraint.constant = 150
+        }else {
+            
+            self.showCarImageView.image = UIImage(named: "down")!
+            self.carImageConstraint.constant = 0
         }
     }
 }

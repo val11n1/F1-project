@@ -22,13 +22,14 @@ class ScheduleTableViewController: UIViewController {
         self.scheduleView = ScheduleView(frame: self.view.frame, viewController: self)
         self.view.addSubview(self.scheduleView as! UIView)
         createViewModel()
+
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        self.scheduleView.setupConstrains()
+        self.scheduleView.setupConstrains(tabBarHeight: self.tabBarController?.tabBar.bounds.height)
       }
+    
     
     private func createViewModel() {
         

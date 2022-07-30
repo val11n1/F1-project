@@ -40,30 +40,35 @@ class ScheduleView: UIView, ScheduleViewProtocol {
 
     init(frame: CGRect, viewController: UIViewController) {
         super.init(frame: frame)
-        self.setupViews()
-        self.tableView.delegate = viewController as? UITableViewDelegate
-        self.tableView.dataSource = viewController as? UITableViewDataSource
-        
+        self.setupViews(viewController: viewController)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
+    private func setupViews(viewController: UIViewController) {
         
         self.addSubview(timeLabel)
         self.addSubview(nextEventDescription)
         self.addSubview(tableView)
         self.addSubview(activityIndicator)
         
+        self.tableView.delegate = viewController as? UITableViewDelegate
+        self.tableView.dataSource = viewController as? UITableViewDataSource
         tableView.register(RaceCell.self, forCellReuseIdentifier: raceCellId)
         tableView.register(BaseHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: raceHeaderFooterId)
         
         activityIndicator.startAnimating()
     }
     
-    func setupConstrains() {
+    func setupConstrains(tabBarHeight: CGFloat?) {
+        
+        var height = 0.0
+        
+        if let tabBarHeight = tabBarHeight {
+            height = tabBarHeight
+        }
         
         NSLayoutConstraint.activate([
 
@@ -84,7 +89,7 @@ class ScheduleView: UIView, ScheduleViewProtocol {
             tableView.topAnchor.constraint(equalTo: self.topAnchor, constant: self.safeAreaInsets.top + 60),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -height)
         ])
     }
     

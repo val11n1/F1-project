@@ -33,11 +33,12 @@ class F1TabBarController: UITabBarController {
     
     private func createViewControllers() {
         
-        let layout = UICollectionViewFlowLayout()
-        let standingVc = StandingCollectionViewController(collectionViewLayout: layout)
+        //let layout = UICollectionViewFlowLayout()
+        let standingVc = StandingViewController()
         
         standingVc.tabBarItem = UITabBarItem(title: "Standing",image: UIImage(named: "trophy")?.withRenderingMode(.alwaysOriginal),tag: 0)
         let navStanding = UINavigationController(rootViewController: standingVc)
+        navStanding.navigationBar.isTranslucent = false
         
         lastSelectedItem = standingVc.tabBarItem
         
@@ -67,7 +68,9 @@ class F1TabBarController: UITabBarController {
         sa.configureWithOpaqueBackground()
         sa.backgroundColor = .black
 
+        
         tabBar.standardAppearance = sa
+        tabBar.isTranslucent = false
         tabBar.barStyle = UIBarStyle.black
         
     }
@@ -84,13 +87,13 @@ extension F1TabBarController {
             let nav = selectedViewController as! UINavigationController
             
             switch nav.visibleViewController {
-            case is StandingCollectionViewController:
+            case is StandingViewController:
                 
-                let vc = nav.visibleViewController as! StandingCollectionViewController
+                let vc = nav.visibleViewController as! StandingViewController
                 
-                if vc.viewModel != nil {
+                if vc.standingView != nil {
                     
-                    vc.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+                    vc.standingView!.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
                 }
                 
             case is NewsTableViewController:

@@ -190,7 +190,6 @@ class DriverCell: BaseCellClass {
         
         nameLabel.text = driverModel.firstName + " " + driverModel.lastName
         standingLabel.text = "#" + driverModel.position
-        //driverDescription.text = "Driver's number: \(driverModel.permanentNumber)  Points: \(driverModel.points)"
         driverDescription.text = "Points: \(driverModel.points)"
         teamNameLabel.text = driverModel.teamName.uppercased()
 

@@ -26,7 +26,7 @@ class TabBarControllerTests: XCTestCase {
 
     func testTabBarControllerHaveStandingCollectionViewController() {
         
-        var standingVC: StandingCollectionViewController?
+        var standingVC: StandingViewController?
         var newsVC: NewsTableViewController?
         var scheduleVC: ScheduleTableViewController?
         
@@ -36,9 +36,9 @@ class TabBarControllerTests: XCTestCase {
                 
                 let vc = nav.viewControllers.first
                 
-                if vc is StandingCollectionViewController {
+                if vc is StandingViewController {
                     
-                    standingVC = vc as? StandingCollectionViewController
+                    standingVC = vc as? StandingViewController
                 }else if vc is NewsTableViewController {
                     
                     newsVC = vc as? NewsTableViewController
