@@ -11,7 +11,7 @@ import SwiftSoup
 
 protocol NewsViewModelProtocol {
     
-    static func createViewModel(completion: @escaping (NewsViewModelProtocol) -> ()) 
+    static func createViewModel(completion: @escaping (NewsViewModelProtocol?) -> ())
     func numberOfRowsInSection(section: Int) -> Int
     func numberOfSections() -> Int
     func elementFrom(indexPath: IndexPath) -> Element?

@@ -18,12 +18,8 @@ class StandingViewModel: StandingViewModelProtocol {
         self.driversArray = driversArray
         self.teamsArray = teamsArray
     }
-    
-    init() {
-        
-    }
-    
-    static func createViewModel(completion: @escaping (StandingViewModelProtocol) -> ()) {
+
+    static func createViewModel(completion: @escaping (StandingViewModelProtocol?) -> ()) {
         
          var driversArray: [ModelProtocol]?
          var teamsArray: [ModelProtocol]?
@@ -31,13 +27,16 @@ class StandingViewModel: StandingViewModelProtocol {
         let queue = DispatchQueue(label: "queue")
         let group = DispatchGroup()
         
+        let dataFetcher = DataFetcherService()
+        
         group.enter()
         queue.async {
             
-            networkingManager.shared.fetchData(type: .DriverResponce, round: nil) { resultArray in
+            dataFetcher.fetchDriversStanding { driversStandingArray in
                 
-                if let resultArray = resultArray {
-                    driversArray = resultArray
+                if let driversStandingArray = driversStandingArray {
+                    
+                    driversArray = DriverModel.createDriverModelArray(driversStandings: driversStandingArray)
                     group.leave()
                 }
             }
@@ -46,10 +45,10 @@ class StandingViewModel: StandingViewModelProtocol {
         group.enter()
         queue.async {
             
-            networkingManager.shared.fetchData(type: .TeamResponce, round: nil) { resultArray in
+            dataFetcher.fetchTeamsStanding { teamStandings in
                 
-                if let resultArray = resultArray {
-                    teamsArray = resultArray
+                if let teamStandings = teamStandings {
+                    teamsArray = TeamModel.createTeamModelArray(teamStandings: teamStandings)
                     group.leave()
                 }
             }
@@ -58,13 +57,13 @@ class StandingViewModel: StandingViewModelProtocol {
         group.notify(queue: .main) {
             
             if let driversArray = driversArray, let teamsArray = teamsArray {
-                    
+                
                 let viewModel = StandingViewModel(driversArray: driversArray, teamsArray: teamsArray)
                 completion(viewModel)
 
             }else {
 
-                completion(StandingViewModel())
+                completion(nil)
             }
         }
     }

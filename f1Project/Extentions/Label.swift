@@ -11,7 +11,7 @@ import UIKit
 
 extension UILabel {
     
-    convenience init (text: String?, fontSize: CGFloat, textAlignment: NSTextAlignment = .center) {
+    convenience init (text: String? = nil, fontSize: CGFloat, textAlignment: NSTextAlignment = .center) {
         self.init()
         textColor = .white
         self.textAlignment = textAlignment
@@ -21,6 +21,5 @@ extension UILabel {
         if let text = text {
             self.text = text
         }
-        
     }
 }

@@ -11,6 +11,7 @@ import Foundation
 
 struct RaceModel: ModelProtocol {
     
+    
     let name: String
     let round: String
     let country: String
@@ -30,10 +31,11 @@ struct RaceModel: ModelProtocol {
         case qualifying
         case race
         case thirdPracticeOrSprint
+        case raceInProgress
+        case raceHasPassed
     }
     
     func raceDateWithOffset() -> Date {
-        
        return dateFromRaceModel(date: date, time: time) + 60 * 60 * 5
     }
     
@@ -65,6 +67,8 @@ struct RaceModel: ModelProtocol {
                 date = sprint!.date
                 time = sprint!.time
             }
+        case .raceInProgress: return Date().returnCurrentDate()
+        case .raceHasPassed: return Date().returnCurrentDate()
         }
         
         return dateFromRaceModel(date: date, time: time)
@@ -88,70 +92,57 @@ struct RaceModel: ModelProtocol {
         
         let raceDateFromComponents = DateComponents(calendar: calendar,year: raceDateComponents.year, month: raceDateComponents.month, day: raceDateComponents.day, hour: raceTimeComponents.hour, minute: raceTimeComponents.minute)
         
-        
         return calendar.date(from: raceDateFromComponents)!.addingTimeInterval(TimeInterval(GMTSeconds))
     }
     
-    static func createRaceModelArray(data: Data) -> [RaceModel] {
-         
-        let decoder = JSONDecoder()
+    static func createRaceModelArray(racesSchedule: RacesSchedule) -> [RaceModel] {
         
         var racesArray = [RaceModel]()
-
-        do {
-            let schedule = try decoder.decode(ScheduleStruct.self, from: data)
-            let racesList = schedule.data.raceTable.races
+        
+        for race in racesSchedule.data.raceTable.races {
             
-            for race in racesList{
+            let raceName = race.raceName
+            let round = race.round
+            let country = race.circuit.location.country
+            let locality = race.circuit.location.locality
+            let date = race.date
+            
+            
+            let stringIndex = race.time.index(race.time.startIndex, offsetBy: 5)
+            let raceTime = race.time[..<stringIndex]
+            
+            let fpTime = race.firstPractice.time[..<stringIndex]
+            let spTime = race.secondPractice.time[..<stringIndex]
+            let qualifyingTime = race.qualifying.time[..<stringIndex]
+            
+            let firstPractice = FirstPractice(date: race.firstPractice.date, time: String(fpTime))
+            let sp = SecondPractice(date: race.secondPractice.date, time: String(spTime))
+            let qualifying = Qualifying(date: race.qualifying.date, time: String(qualifyingTime))
+            
+            var raceModel = RaceModel(name: raceName, round: round, country: country, locality: locality, date: date, time: String(raceTime), firstPractice: firstPractice, secondPractice: sp, thirdPractice: nil, qualifying:qualifying, sprint: nil)
+            
+            if let tp = race.thirdPractice {
+                let tpTime = race.thirdPractice!.time[..<stringIndex]
+                raceModel.thirdPractice = ThirdPractice(date: tp.date, time: String(tpTime))
                 
-                let raceName = race.raceName
-                let round = race.round
-                let country = race.circuit.location.country
-                let locality = race.circuit.location.locality
-                let date = race.date
-                
-                
-                let stringIndex = race.time.index(race.time.startIndex, offsetBy: 5)
-                let raceTime = race.time[..<stringIndex]
-                
-                let fpTime = race.firstPractice.time[..<stringIndex]
-                let spTime = race.secondPractice.time[..<stringIndex]
-                let qualifyingTime = race.qualifying.time[..<stringIndex]
-                
-                let firstPractice = FirstPractice(date: race.firstPractice.date, time: String(fpTime))
-                let sp = SecondPractice(date: race.secondPractice.date, time: String(spTime))
-                let qualifying = Qualifying(date: race.qualifying.date, time: String(qualifyingTime))
-
-                var raceModel = RaceModel(name: raceName, round: round, country: country, locality: locality, date: date, time: String(raceTime), firstPractice: firstPractice, secondPractice: sp, thirdPractice: nil, qualifying:qualifying, sprint: nil)
-                
-                if let tp = race.thirdPractice {
-                    let tpTime = race.thirdPractice!.time[..<stringIndex]
-                    raceModel.thirdPractice = ThirdPractice(date: tp.date, time: String(tpTime))
-                    
-                }
-                
-                if let sprint = race.sprint {
-                    let sprintTime = race.sprint!.time[..<stringIndex]
-                    raceModel.sprint = Sprint(date: sprint.date, time: String(sprintTime))
-                }
-                
-                racesArray.append(raceModel)
             }
-           
             
-        } catch let err {
-            print(err)
+            if let sprint = race.sprint {
+                let sprintTime = race.sprint!.time[..<stringIndex]
+                raceModel.sprint = Sprint(date: sprint.date, time: String(sprintTime))
+            }
             
+            racesArray.append(raceModel)
         }
         return racesArray
-     }
+    }
     
     func nextUpcomingEvent() -> RaceModel.RaceEvent {
         
         let dateNow = Date().returnCurrentDate()
         
         var event: RaceModel.RaceEvent!
-        
+
         if self.thirdPractice != nil {
         
         switch true {
@@ -165,6 +156,10 @@ struct RaceModel: ModelProtocol {
             event = .qualifying
         case _ where self.dateFromEvent(event: .race) > dateNow:
             event = .race
+        case _ where self.dateFromEvent(event: .race) < dateNow && dateNow < self.raceDateWithOffset():
+            event = .raceInProgress
+        case _ where dateNow > self.raceDateWithOffset():
+            event = .raceHasPassed
         default: break
         }
 
@@ -181,6 +176,10 @@ struct RaceModel: ModelProtocol {
             event = .thirdPracticeOrSprint
         case _ where self.dateFromEvent(event: .race) > dateNow:
             event = .race
+        case _ where self.dateFromEvent(event: .race) < dateNow && dateNow < self.raceDateWithOffset():
+            event = .raceInProgress
+        case _ where dateNow > self.raceDateWithOffset():
+            event = .raceHasPassed
         default: break
         }
     }

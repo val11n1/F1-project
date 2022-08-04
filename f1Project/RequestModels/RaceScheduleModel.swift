@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct ScheduleStruct: Codable {
+struct RacesSchedule: Codable {
     
     let data: ScheduleData
     

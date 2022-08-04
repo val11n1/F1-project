@@ -36,8 +36,11 @@ class NewsTableViewController: UITableViewController {
         NewsViewModel.createViewModel { [weak self] viewModel in
             
             self?.activityIndicator.stopAnimating()
-            self?.viewModel = viewModel
-            self?.tableView.reloadData()
+
+            if let viewModel = viewModel {
+                self?.viewModel = viewModel
+                self?.tableView.reloadData()
+            }
         }
     }
     

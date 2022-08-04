@@ -26,41 +26,32 @@ class ScheduleViewModel: ScheduleViewModelProtocol {
         
     }
     
-    init() {
+    static func createViewModel(completion: @escaping (ScheduleViewModelProtocol?) -> ()) {
         
-    }
-
-    
-    static func createViewModel(completion: @escaping (ScheduleViewModelProtocol) -> ()) {
-        
-        let queue = DispatchQueue(label: "queueForSchedule", qos: .userInitiated)
-        
-        queue.async {
+        DataFetcherService().fetchRaces { racesSchedule in
             
-            networkingManager.shared.fetchData(type: .RaceScheduleResponce, round: nil) { array in
-                if let fetchedArray = array as? [RaceModel] {
+            if let racesSchedule = racesSchedule {
+                
+                let racesArray = RaceModel.createRaceModelArray(racesSchedule: racesSchedule)
+                
+                var pastArray = [RaceModel]()
+                var upcomingArray = [RaceModel]()
+                
+                let date = Date().returnCurrentDate()
+                
+                for race in racesArray {
                     
-                    var pastArray = [RaceModel]()
-                    var upcomingArray = [RaceModel]()
-                    
-                    let date = Date().returnCurrentDate()
-                    
-                    for race in fetchedArray {
+                    if race.raceDateWithOffset() < date {
                         
-                        if race.raceDateWithOffset() < date {
-                            
-                            pastArray.append(race)
-                        }else {
-                            
-                            upcomingArray.append(race)
-                        }
+                        pastArray.append(race)
+                    }else {
+                        upcomingArray.append(race)
                     }
-                    
-                    completion(ScheduleViewModel(upcomingArray: upcomingArray, pastArray: pastArray))
-                    
-                }else {
-                    completion(ScheduleViewModel())
                 }
+                completion(ScheduleViewModel(upcomingArray: upcomingArray, pastArray: pastArray))
+            }else {
+                
+                completion(nil)
             }
         }
     }
@@ -73,8 +64,12 @@ class ScheduleViewModel: ScheduleViewModelProtocol {
         return false
     }
     
-    func nextUpcomingRace() -> RaceModel {
-        return upcomingRacesArray![0]
+    func nextUpcomingRace() -> RaceModel? {
+        
+        if let upcomingRacesArray = upcomingRacesArray, upcomingRacesArray.count > 0 {
+            return upcomingRacesArray[0]
+        }
+        return nil
     }
     
     func numberOfRowsInSection(section: Int) -> Int {
@@ -130,4 +125,12 @@ class ScheduleViewModel: ScheduleViewModelProtocol {
         }
     }
     
+    func nextUpcomingRaceToPastRaces() {
+        
+        guard var _ = upcomingRacesArray else { return }
+        guard let _ = pastRacesArray else { return }
+        
+        let event = self.upcomingRacesArray!.removeFirst()
+        self.pastRacesArray!.append(event)
+    }
 }

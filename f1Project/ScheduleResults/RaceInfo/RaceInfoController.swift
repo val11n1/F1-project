@@ -9,96 +9,48 @@ import Foundation
 import UIKit
 
 
-class RaceInfoController: UIViewController, UIScrollViewDelegate {
-    
-    let RaceInfoCellId = "RaceInfoCellId"
-    
-    var reloadedIndexPath: IndexPath?
-    let heightForSegmentImage: CGFloat = 30
-    
-    var firstPageView: UIView!
-    var secondPageView: UIView!
-    var thirdPageView: UIView!
-    var scrollView: UIScrollView!
+class RaceInfoController: UIViewController {
     
     var raceInfoModel: RaceModel!
-    
-    var firstPlaceDriverLabel: UILabel!
-    var firstPlaceTeamLabel: UILabel!
-    
-    var secondPlaceDriverLabel: UILabel!
-    var secondPlaceTeamLabel: UILabel!
-    
-    var thirdPlaceDriverLabel: UILabel!
-    var thirdPlaceTeamLabel: UILabel!
-    
+    var viewModel: RaceInfoViewModelProtocol!
+
     var tableview: UITableView!
-    
-    var raceResults: [RaceResult]?
-   
+    var scrollView: RaceInfoScrollView!
+
     var segmentImage: UIImageView!
     
     var activityIndicatorOnFirstPage: UIActivityIndicatorView!
     
     
     override func viewDidLoad() {
-        
-        createViews()
-        fetchRaceResults()
-        title = raceInfoModel.name
+
+        title = viewModel.raceInfoModel.name
         self.navigationController?.navigationBar.tintColor = .white
-        
     }
     
-    //MARK: Fetch Race results
-    
-    private func fetchRaceResults() {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        let queue = DispatchQueue(label: "queueForRaceResults", qos: .userInitiated, attributes: .concurrent)
-        
-        queue.async {
+        if scrollView == nil {
             
-            networkingManager.shared.fetchData(type: .RaceResultResponce, round: Int(self.raceInfoModel.round)) {[unowned self] array in
+            createViews()
+            setSegmentImage()
+            
+            viewModel.fetchRaceResult { [weak self] isDataNotEmpty in
                 
-                if let racesArray = array as? [RaceResult] {
+                if isDataNotEmpty == false || self?.viewModel.raceResults!.count == 0 {
                     
-                    DispatchQueue.main.sync {
-                        
-                        firstPlaceDriverLabel.text = racesArray[0].driverFirstName + " " + racesArray[0].driverLastName
-                        firstPlaceTeamLabel.text = racesArray[0].constructorName
-                        
-                        secondPlaceDriverLabel.text = racesArray[1].driverFirstName + " " + racesArray[1].driverLastName
-                        secondPlaceTeamLabel.text = racesArray[1].constructorName
-                        
-                        thirdPlaceDriverLabel.text = racesArray[2].driverFirstName + " " + racesArray[2].driverLastName
-                        thirdPlaceTeamLabel.text = racesArray[2].constructorName
-                        raceResults = racesArray
-                        
-                        let tableview = ThirdPageViewSetup.standingTableViewSetup(pageView: thirdPageView, contentSizeHeight: scrollView.contentSize.height)
-                        tableview.delegate = self
-                        tableview.dataSource = self
-                        self.tableview = tableview
-                        
-                        setSegmentImage()
-
-                        self.navigationController?.view.isUserInteractionEnabled = true
-                        self.tabBarController?.view.isUserInteractionEnabled = true
-                        activityIndicatorOnFirstPage.stopAnimating()
-                    }
+                    self?.scrollView.secondPage.shortDescriptionWithoutRaceResult()
+                    self?.scrollView.thirdPage.standindRaceNotStartYet()
                     
                 }else {
                     
-                    DispatchQueue.main.sync {
-                        
-                        firstPlaceDriverLabel.text = "There are no results yet"
-                        ThirdPageViewSetup.standindRaceNotStartYet(pageView: thirdPageView)
-                        setSegmentImage()
-
-                        self.navigationController?.view.isUserInteractionEnabled = true
-                        self.tabBarController?.view.isUserInteractionEnabled = true
-                        activityIndicatorOnFirstPage.stopAnimating()
-
-                    }
+                    let firstThreeDrivers: [DriverRaceResult] = Array(self?.viewModel.raceResults![0...2] ?? [])
+                    self?.scrollView.secondPage.shortDescriptionFrom(raceResult: firstThreeDrivers)
+                    self?.scrollView.thirdPage.tableView.delegate = self
+                    self?.scrollView.thirdPage.tableView.dataSource = self
+                    self?.scrollView.thirdPage.standindRaceHaveResults()
+                    self?.scrollView.thirdPage.tableView.reloadData()
                 }
             }
         }
@@ -108,55 +60,13 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
     
     private func createViews() {
         
-        var frame = CGRect(x: view.bounds.origin.x, y: navigationController!.navigationBar.frame.maxY + heightForSegmentImage, width: view.bounds.width, height: (view.bounds.height - navigationController!.navigationBar.frame.maxY) - navigationController!.tabBarController!.tabBar.bounds.size.height)
-        
-        scrollView = UIScrollView(frame: frame)
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.isPagingEnabled = true
-        scrollView.delegate = self
-        scrollView.contentSize = CGSize(width: frame.size.width * 3, height: view.bounds.height - navigationController!.navigationBar.frame.maxY - navigationController!.tabBarController!.tabBar.bounds.height - heightForSegmentImage)
-        
-        frame.origin.y = 0
-        
-        firstPageView = UIView.initWith(frame: frame)
-        
-        frame.origin.x += frame.size.width
-        secondPageView = UIView.initWith(frame: frame)
-        
-        frame.origin.x += frame.size.width
-        thirdPageView = UIView.initWith(frame: frame)
-        
-        
-        view.addSubview(scrollView)
-        scrollView.addSubview(firstPageView)
-        scrollView.addSubview(secondPageView)
-        scrollView.addSubview(thirdPageView)
-        
-        firstPageActivityIndicatorSetup()
-        FirstPageViewSetup.setupPageView(pageView: firstPageView, raceInfoModel: raceInfoModel, contentSizeHeight: scrollView.contentSize.height)
-        SecondPageViewSetup.setupPageView(pageView: secondPageView, raceInfoModel: raceInfoModel, contentSizeHeight: scrollView.contentSize.height)
-        firstThreeRacers()
-    }
-    
-    //MARK: firstPageView Configure
-    
-    private func firstPageActivityIndicatorSetup() {
-        
-        let ai = UIActivityIndicatorView()
-        ai.translatesAutoresizingMaskIntoConstraints = false
-        ai.color = .white
-        
-        view.addSubview(ai)
-        
-        NSLayoutConstraint.activate([
-        
-            ai.bottomAnchor.constraint(equalTo: view.topAnchor, constant: navigationController!.navigationBar.frame.maxY + 20),
-            ai.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            ai.widthAnchor.constraint(equalToConstant: 50),
-            ai.heightAnchor.constraint(equalToConstant: heightForSegmentImage)
-        ])
-        ai.startAnimating()
-        activityIndicatorOnFirstPage = ai
+        let frame = CGRect(x: self.view.safeAreaLayoutGuide.layoutFrame.origin.x,
+                           y: self.view.safeAreaLayoutGuide.layoutFrame.origin.y + 30,
+                           width: self.view.bounds.width,
+                           height: self.view.safeAreaLayoutGuide.layoutFrame.size.height - 40)
+        self.scrollView = RaceInfoScrollView(frame: frame, raceInfoModel: viewModel.raceInfoModel)
+        self.scrollView.delegate = self
+        self.view.addSubview(scrollView)
     }
     
     private func setSegmentImage() {
@@ -169,68 +79,49 @@ class RaceInfoController: UIViewController, UIScrollViewDelegate {
         
         NSLayoutConstraint.activate([
         
-            iv.bottomAnchor.constraint(equalTo: view.topAnchor, constant: navigationController!.navigationBar.frame.maxY + 20),
+            iv.topAnchor.constraint(equalTo: view.topAnchor, constant: self.view.safeAreaInsets.top),
             iv.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             iv.widthAnchor.constraint(equalToConstant: 50),
-            iv.heightAnchor.constraint(equalToConstant: heightForSegmentImage)
+            iv.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         segmentImage = iv
         
     }
-    
-    //MARK: Second page configure
-    
-    private func firstThreeRacers() {
-        
-       let firstThreeDriversLabels = SecondPageViewSetup.firstThreeDriversSetup(pageView: secondPageView, contentSizeHeight: scrollView.contentSize.height)
-        
-        firstPlaceDriverLabel  = firstThreeDriversLabels.firstPlaceDriverLabel
-        firstPlaceTeamLabel    = firstThreeDriversLabels.firstPlaceTeamLabel
-        
-        secondPlaceDriverLabel = firstThreeDriversLabels.secondPlaceDriverLabel
-        secondPlaceTeamLabel   = firstThreeDriversLabels.secondPlaceTeamLabel
-        
-        thirdPlaceDriverLabel  = firstThreeDriversLabels.thirdPlaceDriverLabel
-        thirdPlaceTeamLabel    = firstThreeDriversLabels.thirdPlaceTeamLabel
-    }
-    
+}
 
-    
-    //MARK: UIScrollViewDelegate
+extension RaceInfoController: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if self.tableview != nil && scrollView.superview != self.tableview.superview || self.tableview == nil {
+        if  scrollView.superview != self.scrollView.thirdPage.tableView.superview {
             
-        switch scrollView.contentOffset.x {
-            
-        case 0:
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) { [unowned self] in
-                
-                segmentImage.image = UIImage(named: "firstPage")
-                title = raceInfoModel.name
-                self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        }
-        case view.bounds.size.width:
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) { [unowned self] in
-            
-                segmentImage.image = UIImage(named: "secondPage")
-                title = "Race info"
-                self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        }
-        case view.bounds.size.width * 2:
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) { [unowned self] in
-                
-                self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-                segmentImage.image = UIImage(named: "thirdPage")
-                title = "Results"
-        }
-        default: break
-        }
+            switch scrollView.contentOffset.x {
+            case 0:
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) { [unowned self] in
+                    
+                    segmentImage.image = UIImage(named: "firstPage")
+                    title = viewModel.raceInfoModel.name
+                    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+                }
+            case view.bounds.size.width:
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) { [unowned self] in
+                    
+                    segmentImage.image = UIImage(named: "secondPage")
+                    title = "Race info"
+                    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                }
+            case view.bounds.size.width * 2:
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) { [unowned self] in
+                    
+                    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                    segmentImage.image = UIImage(named: "thirdPage")
+                    title = "Results"
+                }
+            default: break
+            }
         }
     }
-    
 }
 
 
@@ -238,46 +129,39 @@ extension RaceInfoController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return raceResults!.count
+        return viewModel.numberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: RaceInfoCellId) as! RaceInfoCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.scrollView.thirdPage.RaceInfoCellId) as! RaceInfoCell
         
-        let resultModel = raceResults![indexPath.row]
-        cell.configure(raceResultModel: resultModel)
-        cell.statStackViewHeightConstraint.constant = reloadedIndexPath == indexPath ? 150: 0
-        cell.showStatImageView.image = reloadedIndexPath == indexPath ? UIImage(named: "up"): UIImage(named: "down")
+        guard let resultModel = viewModel.resultModelFrom(index: indexPath.row) else { return cell }
+        let isChosen = viewModel.isCellNeedToRealod(from: indexPath)
+        cell.configure(raceResultModel: resultModel, isChosenCell: isChosen)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return indexPath == reloadedIndexPath ? 250: 90
+        return viewModel.heightForRowAt(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if reloadedIndexPath == nil || reloadedIndexPath != indexPath{
-            
-            reloadedIndexPath = indexPath
-            
-        }else  {
-            
-            reloadedIndexPath = nil
-            
-        }
+        viewModel.chosenCell(indexPath: indexPath)
+        scrollView.thirdPage.tableView.reloadData()
+//        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut) { [weak self] in
+//            self?.scrollView.thirdPage.tableView.beginUpdates()
+//            self?.scrollView.thirdPage.tableView.reloadRows(at: [indexPath], with: .automatic)
+//            self?.scrollView.thirdPage.tableView.endUpdates()
+//        }
         
-        tableView.reloadData()
-        
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear){
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear){ [ weak self] in
             
-            tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+            self?.scrollView.thirdPage.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
         }
     }
 }

@@ -41,6 +41,8 @@ class ScheduleView: UIView, ScheduleViewProtocol {
     init(frame: CGRect, viewController: UIViewController) {
         super.init(frame: frame)
         self.setupViews(viewController: viewController)
+        setupConstrains()
+        //print(frame)
     }
     
     required init?(coder: NSCoder) {
@@ -58,17 +60,9 @@ class ScheduleView: UIView, ScheduleViewProtocol {
         self.tableView.dataSource = viewController as? UITableViewDataSource
         tableView.register(RaceCell.self, forCellReuseIdentifier: raceCellId)
         tableView.register(BaseHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: raceHeaderFooterId)
-        
-        activityIndicator.startAnimating()
     }
     
-    func setupConstrains(tabBarHeight: CGFloat?) {
-        
-        var height = 0.0
-        
-        if let tabBarHeight = tabBarHeight {
-            height = tabBarHeight
-        }
+    private func setupConstrains() {
         
         NSLayoutConstraint.activate([
 
@@ -79,7 +73,7 @@ class ScheduleView: UIView, ScheduleViewProtocol {
 
             nextEventDescription.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
             nextEventDescription.widthAnchor.constraint(equalTo: self.widthAnchor),
-            nextEventDescription.heightAnchor.constraint(equalToConstant: 10),
+            nextEventDescription.heightAnchor.constraint(equalToConstant: 25),
             
             activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
@@ -89,7 +83,7 @@ class ScheduleView: UIView, ScheduleViewProtocol {
             tableView.topAnchor.constraint(equalTo: self.topAnchor, constant: self.safeAreaInsets.top + 60),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -height)
+            tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     
@@ -108,6 +102,10 @@ class ScheduleView: UIView, ScheduleViewProtocol {
                 nextEventDescription.text = "Time until the qualifying start"
             case .race:
                 nextEventDescription.text = "Time until the race start"
+            case .raceInProgress:
+                nextEventDescription.text = "Race in progress"
+            case .raceHasPassed:
+                nextEventDescription.text = "Race in progress"
             }
             
         }else {
@@ -123,6 +121,10 @@ class ScheduleView: UIView, ScheduleViewProtocol {
                 nextEventDescription.text = "Time until the sprint start"
             case .race:
                 nextEventDescription.text = "Time until the race start"
+            case .raceInProgress:
+                nextEventDescription.text = "Race in progress"
+            case .raceHasPassed:
+                nextEventDescription.text = "Race in progress"
             }
         }
     }
@@ -132,6 +134,8 @@ class ScheduleView: UIView, ScheduleViewProtocol {
         let dateFormatter = DateFormatter()
         let calendar = Calendar.current
         let date: Date!
+        let dateNow = Date().returnCurrentDate()
+
         
             switch event {
             case .firstPractice:
@@ -144,9 +148,12 @@ class ScheduleView: UIView, ScheduleViewProtocol {
                 date = race.dateFromEvent(event: .race)
             case .thirdPracticeOrSprint:
                 date = race.dateFromEvent(event: .thirdPracticeOrSprint)
-
+            case .raceInProgress:
+                date = dateNow
+            case .raceHasPassed:
+                date = dateNow
             }
-        let dateNow = Date().returnCurrentDate()
+        
         
         let dateCountDownComponents = calendar.dateComponents([.day, .hour, .minute, .second], from: dateNow, to: date)
         
@@ -157,5 +164,10 @@ class ScheduleView: UIView, ScheduleViewProtocol {
         
         dateFormatter.dateFormat = "HH:mm:ss"
         timeLabel.text = timeLabel.text! + "      " + "\(dateFormatter.string(from: dateCountDown!))"
+    }
+    
+    func noScheduledRaces() {
+        
+        self.nextEventDescription.text = "There are no scheduled races"
     }
 }

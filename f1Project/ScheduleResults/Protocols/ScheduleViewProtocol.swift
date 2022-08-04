@@ -16,10 +16,8 @@ protocol ScheduleViewProtocol {
     var activityIndicator: UIActivityIndicatorView { get }
     var tableView: UITableView { get }
     
-    
-    func setupConstrains(tabBarHeight: CGFloat?)
     func nextEventDescritionFrom(race: RaceModel, event: RaceModel.RaceEvent)
     func timeLabelUpdate(race: RaceModel, event: RaceModel.RaceEvent) 
-
+    func noScheduledRaces()
 
 }

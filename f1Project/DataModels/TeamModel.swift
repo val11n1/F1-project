@@ -10,22 +10,17 @@ import Foundation
 
 struct TeamModel: ModelProtocol {
     
+    
     let name: String
     let position: String
     let points: String
     let wins: String
     
-    static func createTeamModelArray(data: Data) -> [TeamModel] {
+    static func createTeamModelArray(teamStandings: TeamStandings) -> [TeamModel] {
         
-       let decoder = JSONDecoder()
-       var teamssArray = [TeamModel]()
-
-       do {
-           let teams = try decoder.decode(TeamStandings.self, from: data)
-           let standingList = teams.data.standingsTable.standingList.first
+        var teamsArray = [TeamModel]()
            
-           
-           for teamStanding in standingList!.teamStanding {
+        for teamStanding in teamStandings.data.standingsTable.standingList.first!.teamStanding {
                
                let position = teamStanding.position
                let points = teamStanding.points
@@ -34,13 +29,9 @@ struct TeamModel: ModelProtocol {
                
                let teamModel = TeamModel(name: name, position: position, points: points, wins: wins)
                
-               teamssArray.append(teamModel)
+               teamsArray.append(teamModel)
            }
-           
-           
-       } catch let err {
-           print(err)
-       }
-       return teamssArray
+
+       return teamsArray
     }
 }

@@ -13,6 +13,8 @@ class StandingViewController: UIViewController {
     var viewModel: StandingViewModelProtocol?
     var standingView: StandingViewProtocol!
     
+    var isCellWasAnimatedDictionary = [IndexPath: Bool]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,14 +31,22 @@ class StandingViewController: UIViewController {
         
         if standingView == nil {
             configureView()
+            createViewModel()
+        }
+    }
+    
+    private func createViewModel() {
+        
+        StandingViewModel.createViewModel { [weak self] viewModel in
             
-            StandingViewModel.createViewModel { [weak self] viewModel in
-                
-                self?.standingView.activityIndicator.stopAnimating()
+            self?.standingView.activityIndicator.stopAnimating()
+
+            if let viewModel = viewModel {
                 self?.standingView.segmentControl.isHidden = false
                 self?.viewModel = viewModel
                 self?.standingView.collectionView.reloadData()
             }
+
         }
     }
     
@@ -71,6 +81,8 @@ class StandingViewController: UIViewController {
     
     @objc func segmentAction(sender: UISegmentedControl) {
         
+        isCellWasAnimatedDictionary = [IndexPath: Bool]()
+        
         if sender.selectedSegmentIndex == 0  {
             
             standingView.collectionView.reloadData()
@@ -85,6 +97,8 @@ class StandingViewController: UIViewController {
     
     
     @objc func swipeStanding(sender: UISwipeGestureRecognizer) {
+        
+        isCellWasAnimatedDictionary = [IndexPath: Bool]()
         
         standingView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
         
@@ -135,6 +149,23 @@ extension StandingViewController: UICollectionViewDelegate {
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) {
                 collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let isCellWasAnimated = isCellWasAnimatedDictionary[indexPath]
+        
+        if isCellWasAnimated == nil {
+            
+            isCellWasAnimatedDictionary[indexPath] = true
+            
+            let translationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 400, 0)
+            cell.layer.transform = translationTransform
+            
+            UIView.animate(withDuration: 0.7, delay: 0.2, options: .curveEaseInOut) {
+                cell.layer.transform = CATransform3DIdentity
             }
         }
     }

@@ -94,6 +94,8 @@ class RaceInfoCell: BaseTableViewCell {
     
     override func setupView() {
         
+        self.selectionStyle = .none
+        
         let stackView = UIStackView(arrangedSubviews: [qualificationPosLabel, fastestLapLabel, fastestLapTimeLabel, fastestLapRankLabel, fastestLapAvgSpeedLabel], spacing: 0, axis: .vertical, distribution: .equalSpacing)
         statStackViewHeightConstraint = NSLayoutConstraint(item: stackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         stackView.addConstraint(statStackViewHeightConstraint)
@@ -154,7 +156,7 @@ class RaceInfoCell: BaseTableViewCell {
         ])
     }
         
-    func configure(raceResultModel: RaceResult) {
+    func configure(raceResultModel: DriverRaceResult, isChosenCell: Bool) {
         
         nameLabel.text = raceResultModel.driverFirstName + " " + raceResultModel.driverLastName
         standingLabel.text = "#" + raceResultModel.position
@@ -176,6 +178,17 @@ class RaceInfoCell: BaseTableViewCell {
             
             finishStatusLabel.text = "out"
             finishStatusLabel.textColor = .orange
+        }
+        
+        if isChosenCell {
+            
+            showStatImageView.image = UIImage(named: "up")
+            statStackViewHeightConstraint.constant = 150
+            
+        }else {
+            
+            showStatImageView.image = UIImage(named: "down")
+            statStackViewHeightConstraint.constant = 0
         }
     }
 }

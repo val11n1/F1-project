@@ -12,7 +12,7 @@ protocol StandingViewModelProtocol {
     
     var chosenCellIndexPath: IndexPath? { get set }
     
-    static func createViewModel(completion: @escaping (StandingViewModelProtocol) -> ())
+    static func createViewModel(completion: @escaping (StandingViewModelProtocol?) -> ())
     func numberOfItem(selectedSegmentIndex: Int) -> Int
     func returnModelFrom(selectedSegmentIndex: Int, itemIndex: Int) -> ModelProtocol?
     func choseCellAt(indexPath: IndexPath)

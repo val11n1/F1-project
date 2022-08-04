@@ -18,26 +18,18 @@ class NewsViewModel: NewsViewModelProtocol {
     private init(array: [[Element]]) {
         self.newsArray = array
     }
-    
-    init() {
-        
-    }
-    
-    static func createViewModel(completion: @escaping (NewsViewModelProtocol) -> ()) {
+
+    static func createViewModel(completion: @escaping (NewsViewModelProtocol?) -> ()) {
         
         DispatchQueue.global(qos: .userInitiated).async {
             
-            if let resultArray = networkingManager.shared.fetchNews() {
-                
-                let viewModel = NewsViewModel(array: resultArray)
-                
+            DataFetcherService().fetchNews { elementsArray in
                 DispatchQueue.main.async {
-                    completion(viewModel)
-                }
-            }else {
-                
-                DispatchQueue.main.async {
-                    completion(NewsViewModel())
+                    if let elementsArray = elementsArray {
+                        completion(NewsViewModel(array: elementsArray))
+                    }else {
+                        completion(nil)
+                    }
                 }
             }
         }

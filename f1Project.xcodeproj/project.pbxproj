@@ -14,7 +14,7 @@
 		2919EA6227EA1077009B607A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2919EA6127EA1077009B607A /* Assets.xcassets */; };
 		2919EA6527EA1077009B607A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2919EA6327EA1077009B607A /* LaunchScreen.storyboard */; };
 		2919EA7427EA448D009B607A /* DriversPositionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919EA7327EA448D009B607A /* DriversPositionModel.swift */; };
-		2919EA7627EA67BC009B607A /* networkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919EA7527EA67BC009B607A /* networkingManager.swift */; };
+		2919EA7627EA67BC009B607A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919EA7527EA67BC009B607A /* NetworkService.swift */; };
 		2919EA7827EA6D3E009B607A /* DriverModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919EA7727EA6D3E009B607A /* DriverModel.swift */; };
 		2919EA7A27EA7C68009B607A /* DriverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919EA7927EA7C68009B607A /* DriverCell.swift */; };
 		291C13182811E75B009047B1 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291C13172811E75B009047B1 /* ModelProtocol.swift */; };
@@ -23,10 +23,9 @@
 		291CCC6B27F6566B00EBFB7D /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291CCC6A27F6566B00EBFB7D /* ScheduleTableViewController.swift */; };
 		291CCC6D27F659E500EBFB7D /* RaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291CCC6C27F659E500EBFB7D /* RaceCell.swift */; };
 		2924113D27EBDB1600800640 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924113C27EBDB1600800640 /* UIImage.swift */; };
-		292588312816A55C000D2B2E /* FirstPageViewSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588302816A55C000D2B2E /* FirstPageViewSetup.swift */; };
+		292588312816A55C000D2B2E /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588302816A55C000D2B2E /* FirstPageView.swift */; };
 		292588332816A889000D2B2E /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588322816A889000D2B2E /* UIView.swift */; };
-		292588362816ABB8000D2B2E /* DateForEventParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588352816ABB8000D2B2E /* DateForEventParser.swift */; };
-		292588382816AE83000D2B2E /* SecondPageViewSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588372816AE83000D2B2E /* SecondPageViewSetup.swift */; };
+		292588382816AE83000D2B2E /* SecondPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588372816AE83000D2B2E /* SecondPageView.swift */; };
 		2925883A2816AF52000D2B2E /* RaceInfoParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292588392816AF52000D2B2E /* RaceInfoParams.swift */; };
 		292AF82427F485CD000C0409 /* NewsHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292AF82327F485CD000C0409 /* NewsHeaderFooterView.swift */; };
 		292F126C27FD076300392D25 /* RaceInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F126B27FD076300392D25 /* RaceInfoCell.swift */; };
@@ -34,16 +33,22 @@
 		293CEB8227FA5DF900C6D9CF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CEB8127FA5DF900C6D9CF /* Label.swift */; };
 		293E1D44280DEDE700422516 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E1D43280DEDE700422516 /* Date.swift */; };
 		293F4E4C27F4C1F800AB7BE1 /* WebNewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293F4E4B27F4C1F800AB7BE1 /* WebNewsController.swift */; };
-		2940162B2816DA2D008A4895 /* ThirdPageViewSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2940162A2816DA2D008A4895 /* ThirdPageViewSetup.swift */; };
+		2940162B2816DA2D008A4895 /* ThirdPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2940162A2816DA2D008A4895 /* ThirdPageView.swift */; };
 		294373AF27FF1B4800199244 /* RaceResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294373AE27FF1B4800199244 /* RaceResultModel.swift */; };
-		294373B227FF3BA400199244 /* RaceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294373B127FF3BA400199244 /* RaceResult.swift */; };
+		294373B227FF3BA400199244 /* DriverRaceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294373B127FF3BA400199244 /* DriverRaceResult.swift */; };
 		296B686E27ECE92F0044EB4A /* TeamsPositionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B686D27ECE92F0044EB4A /* TeamsPositionModel.swift */; };
 		296B687027ED059A0044EB4A /* TeamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B686F27ED059A0044EB4A /* TeamModel.swift */; };
 		296B687227ED0B1C0044EB4A /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B687127ED0B1C0044EB4A /* TeamCell.swift */; };
 		298A818E27F3BDA20061A3F8 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298A818D27F3BDA20061A3F8 /* NewsCell.swift */; };
 		299DAB2E27EB9123004EB590 /* F1TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299DAB2D27EB9123004EB590 /* F1TabBarController.swift */; };
 		29A17DA627F2842500BF5AA5 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A17DA527F2842500BF5AA5 /* NewsTableViewController.swift */; };
+		391C33B1289AD58100467328 /* ThirdPageViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391C33B0289AD58100467328 /* ThirdPageViewProtocol.swift */; };
 		392E00FB28903697005C8136 /* TabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392E00FA28903697005C8136 /* TabBarControllerTests.swift */; };
+		393F632B28993D1200352897 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393F632A28993D1200352897 /* NetworkDataFetcher.swift */; };
+		393F632D28993EFE00352897 /* DataFetcherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393F632C28993EFE00352897 /* DataFetcherService.swift */; };
+		393F632F289945DB00352897 /* DataFetcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393F632E289945DB00352897 /* DataFetcherProtocol.swift */; };
+		393F63312899466200352897 /* NetworkingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393F63302899466200352897 /* NetworkingProtocol.swift */; };
+		393F63582899890900352897 /* RaceInfoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393F63572899890900352897 /* RaceInfoScrollView.swift */; };
 		3940312A28914E78003DEB56 /* StandingViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3940312928914E78003DEB56 /* StandingViewControllerTests.swift */; };
 		3940312D28914F7F003DEB56 /* StandingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3940312C28914F7F003DEB56 /* StandingViewModel.swift */; };
 		3940312F2891537E003DEB56 /* StandingViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3940312E2891537E003DEB56 /* StandingViewModelProtocol.swift */; };
@@ -51,8 +56,12 @@
 		3940313428917542003DEB56 /* NewsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3940313328917542003DEB56 /* NewsViewModelProtocol.swift */; };
 		39544BBE2893391C002E874B /* StandingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39544BBD2893391C002E874B /* StandingViewProtocol.swift */; };
 		39544BC02893392F002E874B /* StandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39544BBF2893392F002E874B /* StandingView.swift */; };
+		395BE019289A8E35009D5FAA /* SecondPageViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395BE018289A8E35009D5FAA /* SecondPageViewProtocol.swift */; };
+		395BE01D289AB8A2009D5FAA /* FirstPageViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395BE01C289AB8A2009D5FAA /* FirstPageViewProtocol.swift */; };
 		395EDA5E2892A5CD001FD12C /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395EDA5D2892A5CD001FD12C /* ScheduleView.swift */; };
 		395EDA602892A5DF001FD12C /* ScheduleViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395EDA5F2892A5DF001FD12C /* ScheduleViewProtocol.swift */; };
+		3960F2AB289695C2005EF874 /* RaceInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3960F2AA289695C2005EF874 /* RaceInfoViewModel.swift */; };
+		3960F2AD289695D3005EF874 /* RaceInfoViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3960F2AC289695D3005EF874 /* RaceInfoViewModelProtocol.swift */; };
 		39627EF328902E7800688BF4 /* f1ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39627EF228902E7800688BF4 /* f1ProjectTests.swift */; };
 		39627EFC28902F9800688BF4 /* SceneDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39627EFB28902F9800688BF4 /* SceneDelegateTests.swift */; };
 		398000062891E1BD0039E0C0 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398000052891E1BD0039E0C0 /* ScheduleViewModel.swift */; };
@@ -80,7 +89,7 @@
 		2919EA6427EA1077009B607A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2919EA6627EA1077009B607A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2919EA7327EA448D009B607A /* DriversPositionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriversPositionModel.swift; sourceTree = "<group>"; };
-		2919EA7527EA67BC009B607A /* networkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networkingManager.swift; sourceTree = "<group>"; };
+		2919EA7527EA67BC009B607A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		2919EA7727EA6D3E009B607A /* DriverModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverModel.swift; sourceTree = "<group>"; };
 		2919EA7927EA7C68009B607A /* DriverCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverCell.swift; sourceTree = "<group>"; };
 		291C13172811E75B009047B1 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
@@ -89,10 +98,9 @@
 		291CCC6A27F6566B00EBFB7D /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		291CCC6C27F659E500EBFB7D /* RaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceCell.swift; sourceTree = "<group>"; };
 		2924113C27EBDB1600800640 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
-		292588302816A55C000D2B2E /* FirstPageViewSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewSetup.swift; sourceTree = "<group>"; };
+		292588302816A55C000D2B2E /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
 		292588322816A889000D2B2E /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
-		292588352816ABB8000D2B2E /* DateForEventParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateForEventParser.swift; sourceTree = "<group>"; };
-		292588372816AE83000D2B2E /* SecondPageViewSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPageViewSetup.swift; sourceTree = "<group>"; };
+		292588372816AE83000D2B2E /* SecondPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPageView.swift; sourceTree = "<group>"; };
 		292588392816AF52000D2B2E /* RaceInfoParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoParams.swift; sourceTree = "<group>"; };
 		292AF82327F485CD000C0409 /* NewsHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderFooterView.swift; sourceTree = "<group>"; };
 		292F126B27FD076300392D25 /* RaceInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoCell.swift; sourceTree = "<group>"; };
@@ -100,16 +108,22 @@
 		293CEB8127FA5DF900C6D9CF /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		293E1D43280DEDE700422516 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		293F4E4B27F4C1F800AB7BE1 /* WebNewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebNewsController.swift; sourceTree = "<group>"; };
-		2940162A2816DA2D008A4895 /* ThirdPageViewSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPageViewSetup.swift; sourceTree = "<group>"; };
+		2940162A2816DA2D008A4895 /* ThirdPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPageView.swift; sourceTree = "<group>"; };
 		294373AE27FF1B4800199244 /* RaceResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultModel.swift; sourceTree = "<group>"; };
-		294373B127FF3BA400199244 /* RaceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResult.swift; sourceTree = "<group>"; };
+		294373B127FF3BA400199244 /* DriverRaceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverRaceResult.swift; sourceTree = "<group>"; };
 		296B686D27ECE92F0044EB4A /* TeamsPositionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsPositionModel.swift; sourceTree = "<group>"; };
 		296B686F27ED059A0044EB4A /* TeamModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamModel.swift; sourceTree = "<group>"; };
 		296B687127ED0B1C0044EB4A /* TeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
 		298A818D27F3BDA20061A3F8 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		299DAB2D27EB9123004EB590 /* F1TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = F1TabBarController.swift; sourceTree = "<group>"; };
 		29A17DA527F2842500BF5AA5 /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
+		391C33B0289AD58100467328 /* ThirdPageViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPageViewProtocol.swift; sourceTree = "<group>"; };
 		392E00FA28903697005C8136 /* TabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerTests.swift; sourceTree = "<group>"; };
+		393F632A28993D1200352897 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
+		393F632C28993EFE00352897 /* DataFetcherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherService.swift; sourceTree = "<group>"; };
+		393F632E289945DB00352897 /* DataFetcherProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherProtocol.swift; sourceTree = "<group>"; };
+		393F63302899466200352897 /* NetworkingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingProtocol.swift; sourceTree = "<group>"; };
+		393F63572899890900352897 /* RaceInfoScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoScrollView.swift; sourceTree = "<group>"; };
 		3940312928914E78003DEB56 /* StandingViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingViewControllerTests.swift; sourceTree = "<group>"; };
 		3940312C28914F7F003DEB56 /* StandingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingViewModel.swift; sourceTree = "<group>"; };
 		3940312E2891537E003DEB56 /* StandingViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -117,8 +131,12 @@
 		3940313328917542003DEB56 /* NewsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModelProtocol.swift; sourceTree = "<group>"; };
 		39544BBD2893391C002E874B /* StandingViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingViewProtocol.swift; sourceTree = "<group>"; };
 		39544BBF2893392F002E874B /* StandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingView.swift; sourceTree = "<group>"; };
+		395BE018289A8E35009D5FAA /* SecondPageViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPageViewProtocol.swift; sourceTree = "<group>"; };
+		395BE01C289AB8A2009D5FAA /* FirstPageViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewProtocol.swift; sourceTree = "<group>"; };
 		395EDA5D2892A5CD001FD12C /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		395EDA5F2892A5DF001FD12C /* ScheduleViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewProtocol.swift; sourceTree = "<group>"; };
+		3960F2AA289695C2005EF874 /* RaceInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoViewModel.swift; sourceTree = "<group>"; };
+		3960F2AC289695D3005EF874 /* RaceInfoViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceInfoViewModelProtocol.swift; sourceTree = "<group>"; };
 		39627EF028902E7800688BF4 /* f1ProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = f1ProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39627EF228902E7800688BF4 /* f1ProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = f1ProjectTests.swift; sourceTree = "<group>"; };
 		39627EFB28902F9800688BF4 /* SceneDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegateTests.swift; sourceTree = "<group>"; };
@@ -182,11 +200,11 @@
 			children = (
 				299DAB2D27EB9123004EB590 /* F1TabBarController.swift */,
 				2919EA5827EA1075009B607A /* AppDelegate.swift */,
-				2919EA7527EA67BC009B607A /* networkingManager.swift */,
 				2919EA5A27EA1075009B607A /* SceneDelegate.swift */,
 				2925882B2816A36D000D2B2E /* Standing */,
 				2925882C2816A380000D2B2E /* News */,
 				2925882D2816A38E000D2B2E /* ScheduleResults */,
+				393F63332899471700352897 /* DataFetcherService */,
 				294373B027FF3B6900199244 /* DataModels */,
 				2919EA7227EA446A009B607A /* RequestModels */,
 				2919EA7B27EA7C6F009B607A /* Cells */,
@@ -264,21 +282,8 @@
 				395EDA5D2892A5CD001FD12C /* ScheduleView.swift */,
 				395EDA612892A5E8001FD12C /* Protocols */,
 				3940312B28914F51003DEB56 /* RaceInfo */,
-				292588342816AB3F000D2B2E /* PageViewSetup */,
 			);
 			path = ScheduleResults;
-			sourceTree = "<group>";
-		};
-		292588342816AB3F000D2B2E /* PageViewSetup */ = {
-			isa = PBXGroup;
-			children = (
-				292588302816A55C000D2B2E /* FirstPageViewSetup.swift */,
-				292588372816AE83000D2B2E /* SecondPageViewSetup.swift */,
-				2940162A2816DA2D008A4895 /* ThirdPageViewSetup.swift */,
-				292588392816AF52000D2B2E /* RaceInfoParams.swift */,
-				292588352816ABB8000D2B2E /* DateForEventParser.swift */,
-			);
-			path = PageViewSetup;
 			sourceTree = "<group>";
 		};
 		294373B027FF3B6900199244 /* DataModels */ = {
@@ -287,10 +292,19 @@
 				296B686F27ED059A0044EB4A /* TeamModel.swift */,
 				291CCC6827F653FB00EBFB7D /* RaceModel.swift */,
 				2919EA7727EA6D3E009B607A /* DriverModel.swift */,
-				294373B127FF3BA400199244 /* RaceResult.swift */,
+				294373B127FF3BA400199244 /* DriverRaceResult.swift */,
 				291C13172811E75B009047B1 /* ModelProtocol.swift */,
 			);
 			path = DataModels;
+			sourceTree = "<group>";
+		};
+		391C33AF289AD54F00467328 /* ThirdPageView */ = {
+			isa = PBXGroup;
+			children = (
+				2940162A2816DA2D008A4895 /* ThirdPageView.swift */,
+				391C33B0289AD58100467328 /* ThirdPageViewProtocol.swift */,
+			);
+			path = ThirdPageView;
 			sourceTree = "<group>";
 		};
 		392E00F928903669005C8136 /* TabBarControllerTests */ = {
@@ -299,6 +313,35 @@
 				392E00FA28903697005C8136 /* TabBarControllerTests.swift */,
 			);
 			path = TabBarControllerTests;
+			sourceTree = "<group>";
+		};
+		393F6332289946A700352897 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				393F632A28993D1200352897 /* NetworkDataFetcher.swift */,
+				2919EA7527EA67BC009B607A /* NetworkService.swift */,
+				393F63302899466200352897 /* NetworkingProtocol.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		393F63332899471700352897 /* DataFetcherService */ = {
+			isa = PBXGroup;
+			children = (
+				393F632C28993EFE00352897 /* DataFetcherService.swift */,
+				393F632E289945DB00352897 /* DataFetcherProtocol.swift */,
+				393F6332289946A700352897 /* Networking */,
+			);
+			path = DataFetcherService;
+			sourceTree = "<group>";
+		};
+		393F637E2899BF9700352897 /* FirstPageView */ = {
+			isa = PBXGroup;
+			children = (
+				292588302816A55C000D2B2E /* FirstPageView.swift */,
+				395BE01C289AB8A2009D5FAA /* FirstPageViewProtocol.swift */,
+			);
+			path = FirstPageView;
 			sourceTree = "<group>";
 		};
 		3940312828914E36003DEB56 /* StandingTests */ = {
@@ -313,6 +356,13 @@
 			isa = PBXGroup;
 			children = (
 				292F126D27FD0B5100392D25 /* RaceInfoController.swift */,
+				3960F2AA289695C2005EF874 /* RaceInfoViewModel.swift */,
+				3960F2AC289695D3005EF874 /* RaceInfoViewModelProtocol.swift */,
+				393F63572899890900352897 /* RaceInfoScrollView.swift */,
+				393F637E2899BF9700352897 /* FirstPageView */,
+				395BE017289A8E0C009D5FAA /* SecondPageView */,
+				391C33AF289AD54F00467328 /* ThirdPageView */,
+				292588392816AF52000D2B2E /* RaceInfoParams.swift */,
 			);
 			path = RaceInfo;
 			sourceTree = "<group>";
@@ -332,6 +382,15 @@
 				39544BBD2893391C002E874B /* StandingViewProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		395BE017289A8E0C009D5FAA /* SecondPageView */ = {
+			isa = PBXGroup;
+			children = (
+				292588372816AE83000D2B2E /* SecondPageView.swift */,
+				395BE018289A8E35009D5FAA /* SecondPageViewProtocol.swift */,
+			);
+			path = SecondPageView;
 			sourceTree = "<group>";
 		};
 		395EDA612892A5E8001FD12C /* Protocols */ = {
@@ -517,47 +576,56 @@
 				2919EA7A27EA7C68009B607A /* DriverCell.swift in Sources */,
 				292F126E27FD0B5100392D25 /* RaceInfoController.swift in Sources */,
 				2919EA7427EA448D009B607A /* DriversPositionModel.swift in Sources */,
+				393F63312899466200352897 /* NetworkingProtocol.swift in Sources */,
+				3960F2AD289695D3005EF874 /* RaceInfoViewModelProtocol.swift in Sources */,
 				299DAB2E27EB9123004EB590 /* F1TabBarController.swift in Sources */,
+				393F632F289945DB00352897 /* DataFetcherProtocol.swift in Sources */,
 				296B686E27ECE92F0044EB4A /* TeamsPositionModel.swift in Sources */,
 				398000082891E2290039E0C0 /* ScheduleViewModelProtocol.swift in Sources */,
 				298A818E27F3BDA20061A3F8 /* NewsCell.swift in Sources */,
 				395EDA5E2892A5CD001FD12C /* ScheduleView.swift in Sources */,
-				292588362816ABB8000D2B2E /* DateForEventParser.swift in Sources */,
 				294373AF27FF1B4800199244 /* RaceResultModel.swift in Sources */,
 				292AF82427F485CD000C0409 /* NewsHeaderFooterView.swift in Sources */,
 				39403132289173E6003DEB56 /* NewsViewModel.swift in Sources */,
-				2919EA7627EA67BC009B607A /* networkingManager.swift in Sources */,
-				292588312816A55C000D2B2E /* FirstPageViewSetup.swift in Sources */,
+				2919EA7627EA67BC009B607A /* NetworkService.swift in Sources */,
+				292588312816A55C000D2B2E /* FirstPageView.swift in Sources */,
 				2919EA5D27EA1075009B607A /* StandingViewController.swift in Sources */,
 				2919EA7827EA6D3E009B607A /* DriverModel.swift in Sources */,
 				39544BC02893392F002E874B /* StandingView.swift in Sources */,
-				2940162B2816DA2D008A4895 /* ThirdPageViewSetup.swift in Sources */,
+				2940162B2816DA2D008A4895 /* ThirdPageView.swift in Sources */,
 				29A17DA627F2842500BF5AA5 /* NewsTableViewController.swift in Sources */,
+				393F63582899890900352897 /* RaceInfoScrollView.swift in Sources */,
 				291C13182811E75B009047B1 /* ModelProtocol.swift in Sources */,
 				293F4E4C27F4C1F800AB7BE1 /* WebNewsController.swift in Sources */,
+				393F632B28993D1200352897 /* NetworkDataFetcher.swift in Sources */,
+				395BE019289A8E35009D5FAA /* SecondPageViewProtocol.swift in Sources */,
 				292F126C27FD076300392D25 /* RaceInfoCell.swift in Sources */,
 				292588332816A889000D2B2E /* UIView.swift in Sources */,
 				291CCC6D27F659E500EBFB7D /* RaceCell.swift in Sources */,
 				2924113D27EBDB1600800640 /* UIImage.swift in Sources */,
 				293CEB8227FA5DF900C6D9CF /* Label.swift in Sources */,
 				3940313428917542003DEB56 /* NewsViewModelProtocol.swift in Sources */,
-				294373B227FF3BA400199244 /* RaceResult.swift in Sources */,
+				294373B227FF3BA400199244 /* DriverRaceResult.swift in Sources */,
 				395EDA602892A5DF001FD12C /* ScheduleViewProtocol.swift in Sources */,
 				296B687227ED0B1C0044EB4A /* TeamCell.swift in Sources */,
 				2925883A2816AF52000D2B2E /* RaceInfoParams.swift in Sources */,
-				292588382816AE83000D2B2E /* SecondPageViewSetup.swift in Sources */,
+				292588382816AE83000D2B2E /* SecondPageView.swift in Sources */,
 				291365D027F0AF76003CA1CB /* StackView.swift in Sources */,
 				296B687027ED059A0044EB4A /* TeamModel.swift in Sources */,
 				2919EA5927EA1075009B607A /* AppDelegate.swift in Sources */,
+				391C33B1289AD58100467328 /* ThirdPageViewProtocol.swift in Sources */,
 				293E1D44280DEDE700422516 /* Date.swift in Sources */,
 				291CCC6727F5DF2C00EBFB7D /* RaceScheduleModel.swift in Sources */,
 				3940312F2891537E003DEB56 /* StandingViewModelProtocol.swift in Sources */,
 				39544BBE2893391C002E874B /* StandingViewProtocol.swift in Sources */,
+				395BE01D289AB8A2009D5FAA /* FirstPageViewProtocol.swift in Sources */,
 				291CCC6B27F6566B00EBFB7D /* ScheduleTableViewController.swift in Sources */,
+				3960F2AB289695C2005EF874 /* RaceInfoViewModel.swift in Sources */,
 				291CCC6927F653FB00EBFB7D /* RaceModel.swift in Sources */,
 				3940312D28914F7F003DEB56 /* StandingViewModel.swift in Sources */,
 				398000062891E1BD0039E0C0 /* ScheduleViewModel.swift in Sources */,
 				2919EA5B27EA1075009B607A /* SceneDelegate.swift in Sources */,
+				393F632D28993EFE00352897 /* DataFetcherService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
